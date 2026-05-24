@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bezpečný prodej nemovitosti — Mediato</title>
+<meta name="description" content="Příprava nemovitosti k prodeji, expertní cenovka, ošetření vad ještě před inzercí. Prodáte bez reklamací a bez stresu z toho, co přijde po podpisu.">
+<link rel="icon" type="image/svg+xml" href="../../images/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+@font-face { font-family: Satoshi; src: url('../../fonts/Satoshi-Light.otf') format('opentype');   font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('../../fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('../../fonts/Satoshi-Medium.otf') format('opentype');  font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('../../fonts/Satoshi-Bold.otf') format('opentype');    font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('../../fonts/Satoshi-Black.otf') format('opentype');   font-weight: 900; font-style: normal; font-display: swap; }
+
+:root {
+  --yellow: #5edd79; --yellow-2: #4ac766; --yellow-bg: #def8e5;
+  --heading: #1c1e4f; --heading-2: #2a2d6e;
+  --body: #545686; --purple: #4e3bf0;
+  --white: #ffffff; --off-white: #f7f7f9;
+  --line: rgba(28, 30, 79, 0.10);
+  --line-strong: rgba(28, 30, 79, 0.20);
+  --line-light: rgba(255, 255, 255, 0.16);
+  --container: 1320px; --pad-x: 40px;
+  --section-pad: 120px;
+  --radius: 16px; --radius-lg: 24px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: Satoshi, Ubuntu, system-ui, sans-serif; font-size: 17px; line-height: 1.55; color: var(--body); background: var(--white); }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
+
+.eyebrow { display: inline-flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--heading); }
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; opacity: 0.5; }
+.eyebrow--green { color: var(--yellow-2); }
+.eyebrow--light { color: rgba(255, 255, 255, 0.7); }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad-x); width: 100%; }
+.lead { font-size: clamp(18px, 1.3vw, 22px); line-height: 1.45; color: var(--body); max-width: 56ch; font-weight: 400; }
+
+.btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 30px; font-family: Satoshi, sans-serif; font-weight: 700; font-size: 15px; border-radius: 999px; letter-spacing: -0.005em; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; white-space: nowrap; }
+.btn::after { content: "→"; font-size: 18px; transition: transform 0.25s; }
+.btn:hover::after { transform: translateX(4px); }
+.btn--primary { background: var(--yellow); color: var(--heading); }
+.btn--primary:hover { background: var(--yellow-2); }
+.btn--dark { background: var(--heading); color: var(--white); }
+.btn--dark:hover { background: var(--heading-2); }
+.btn--ghost { background: transparent; color: var(--heading); border: 1.5px solid var(--line-strong); padding: 16.5px 28.5px; }
+.btn--ghost:hover { background: var(--heading); color: var(--white); border-color: var(--heading); }
+.btn--ghost-light { background: transparent; color: var(--white); border: 1.5px solid var(--line-light); padding: 16.5px 28.5px; }
+.btn--ghost-light:hover { background: var(--yellow); color: var(--heading); border-color: var(--yellow); }
+
+/* ===== NAV ===== */
+.nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid transparent; transition: background 0.3s, border-color 0.3s; }
+.nav.is-scrolled { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom-color: var(--line); }
+.nav__inner { display: flex; align-items: center; justify-content: space-between; padding: 16px var(--pad-x); max-width: var(--container); margin: 0 auto; gap: 32px; }
+.brand { display: inline-flex; align-items: center; }
+.brand img { height: 38px; width: auto; }
+.nav__menu { display: flex; align-items: center; gap: 40px; list-style: none; }
+.nav__link { font-size: 15px; font-weight: 500; color: var(--heading); padding: 6px 0; transition: color 0.2s; }
+.nav__link:hover { color: var(--yellow-2); }
+.nav__link--has-dd { display: inline-flex; align-items: center; gap: 6px; }
+.nav__link--has-dd.is-active { color: var(--yellow-2); }
+.nav__chevron { width: 10px; height: 7px; transition: transform 0.25s; }
+.nav__item--dropdown { position: relative; }
+.nav__item--dropdown:hover .nav__chevron,
+.nav__item--dropdown.is-open .nav__chevron { transform: rotate(180deg); }
+
+.nav__dropdown {
+  position: absolute;
+  top: calc(100% + 16px); left: 50%; transform: translateX(-50%) translateY(-8px);
+  width: 380px; background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 30px 80px -20px rgba(28, 30, 79, 0.20), 0 8px 24px -8px rgba(28, 30, 79, 0.10);
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr; gap: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, transform 0.25s, visibility 0.2s;
+  z-index: 200;
+}
+.nav__dropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px; left: 0; right: 0;
+  height: 24px;
+}
+.nav__item--dropdown:hover .nav__dropdown,
+.nav__item--dropdown:focus-within .nav__dropdown,
+.nav__item--dropdown.is-open .nav__dropdown {
+  opacity: 1; visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.dd-card {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  transition: background 0.2s;
+}
+.dd-card:hover, .dd-card:focus { background: var(--yellow-bg); }
+.dd-card.is-active { background: var(--yellow-bg); }
+.dd-card__icon {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--yellow-bg);
+  display: grid; place-items: center;
+  transition: background 0.2s;
+}
+.dd-card:hover .dd-card__icon, .dd-card.is-active .dd-card__icon { background: var(--white); box-shadow: 0 0 0 1.5px var(--yellow-2); }
+.dd-card__icon img { width: 22px; height: 22px; }
+.dd-card__text { display: flex; flex-direction: column; gap: 2px; }
+.dd-card__title { font-family: Satoshi, sans-serif; font-size: 15px; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+.dd-card__sub { font-size: 12px; color: var(--body); line-height: 1.4; }
+
+.nav__cta { background: var(--yellow); color: var(--heading); font-size: 14px; font-weight: 700; padding: 12px 22px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.2s; }
+.nav__cta::after { content: "→"; font-size: 16px; }
+.nav__cta:hover { background: var(--yellow-2); transform: translateY(-1px); }
+.nav__burger { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; border: 1px solid var(--line-strong); border-radius: 999px; }
+.nav__burger svg { width: 18px; height: 18px; color: var(--heading); }
+
+/* ===== PAGE HERO (smaller than homepage hero) ===== */
+.phero { background: var(--white); padding: 56px 0 96px; position: relative; overflow: hidden; }
+.phero__crumbs { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: var(--body); margin-bottom: 56px; text-transform: uppercase; }
+.phero__crumbs a { display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.phero__crumbs a:hover { color: var(--heading); }
+.phero__crumbs-num { font-variant-numeric: tabular-nums; opacity: 0.6; }
+.phero__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(52px, 8vw, 132px); line-height: 0.94; letter-spacing: -0.035em; color: var(--heading); max-width: 14ch; }
+.phero__title .accent { color: var(--yellow-2); font-weight: 700; }
+.phero__bottom { margin-top: 48px; display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: end; }
+.phero__sub { font-size: clamp(17px, 1.3vw, 21px); line-height: 1.5; color: var(--body); max-width: 56ch; font-weight: 400; }
+.phero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.phero__meta { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
+.phero__recenze { display: flex; align-items: center; gap: 18px; }
+.phero__recenze-photos { display: flex; }
+.phero__recenze-photos img { width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--white); margin-left: -12px; object-fit: cover; }
+.phero__recenze-photos img:first-child { margin-left: 0; }
+.phero__stars { display: flex; gap: 2px; }
+.phero__stars svg { width: 15px; height: 15px; color: var(--yellow); fill: currentColor; }
+.phero__rec-text { font-size: 14px; color: var(--heading); }
+.phero__rec-text strong { font-weight: 700; }
+
+/* ===== PAIN POINTS ===== */
+.pain { background: var(--off-white); padding: var(--section-pad) 0; }
+.pain__head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 64px; }
+.pain__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 84px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); max-width: 14ch; }
+.pain__title .accent { color: var(--yellow-2); font-weight: 700; }
+.pain__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.pain__card { background: var(--white); border-radius: var(--radius); padding: 32px 28px; border: 1px solid var(--line); transition: transform 0.25s, border-color 0.25s; }
+.pain__card:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+.pain__card-num { font-family: Satoshi, sans-serif; font-size: 13px; font-weight: 700; color: var(--yellow-2); margin-bottom: 18px; font-variant-numeric: tabular-nums; }
+.pain__card-title { font-family: Satoshi, sans-serif; font-size: 19px; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; margin-bottom: 10px; line-height: 1.25; }
+.pain__card-desc { font-size: 14px; color: var(--body); line-height: 1.55; }
+
+/* ===== INTRO (photo + checklist) ===== */
+.intro { background: var(--white); padding: var(--section-pad) 0; }
+.intro__inner { display: grid; grid-template-columns: 1fr 1.1fr; gap: 96px; align-items: start; }
+.intro__visual { position: relative; }
+.intro__photo { width: 100%; border-radius: var(--radius-lg); display: block; aspect-ratio: 4 / 5; object-fit: cover; }
+.intro__widget { position: absolute; right: -20px; bottom: -20px; background: var(--yellow); border-radius: var(--radius-lg); padding: 20px 24px; display: flex; align-items: center; gap: 14px; box-shadow: 0 20px 50px -10px rgba(28, 30, 79, 0.25); }
+.intro__widget-num { font-family: Satoshi, sans-serif; font-size: 36px; font-weight: 700; color: var(--heading); line-height: 1; }
+.intro__widget-label { font-size: 13px; color: var(--heading); line-height: 1.3; }
+.intro__widget-label strong { display: block; font-weight: 700; }
+.intro__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 84px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); margin: 24px 0 28px; max-width: 14ch; }
+.intro__title .accent { color: var(--yellow-2); font-weight: 700; }
+.intro__para { font-size: 17px; line-height: 1.6; color: var(--body); max-width: 56ch; }
+.intro__checks { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+.intro__check { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.intro__check:last-child { border-bottom: 0; }
+.intro__check svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--yellow-2); margin-top: 1px; }
+.intro__check span { font-size: 16px; font-weight: 500; color: var(--heading); letter-spacing: -0.005em; }
+.intro__cta { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ===== PROCESS (light variant for service pages) ===== */
+.sproc { background: var(--yellow-bg); padding: var(--section-pad) 0; }
+.sproc__head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 64px; }
+.sproc__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 88px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); max-width: 14ch; }
+.sproc__title .accent { color: var(--yellow-2); font-weight: 700; }
+.sproc__intro { font-size: 17px; line-height: 1.5; color: var(--body); max-width: 50ch; }
+.sproc__list { display: flex; flex-direction: column; gap: 0; }
+.sstep {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 28px;
+  padding: 28px 0;
+  border-top: 1px solid rgba(28, 30, 79, 0.12);
+  align-items: start;
+  transition: padding-left 0.25s;
+}
+.sstep:hover { padding-left: 12px; }
+.sstep:last-child { border-bottom: 1px solid rgba(28, 30, 79, 0.12); }
+.sstep__num { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 4vw, 60px); line-height: 1; color: var(--yellow-2); font-variant-numeric: tabular-nums; }
+.sstep__title { font-family: Satoshi, sans-serif; font-size: clamp(20px, 1.6vw, 26px); font-weight: 700; color: var(--heading); letter-spacing: -0.01em; margin-bottom: 8px; }
+.sstep__desc { font-size: 15px; line-height: 1.55; color: var(--body); max-width: 64ch; }
+
+/* ===== PRICING ===== */
+.pricing { background: var(--white); padding: var(--section-pad) 0; }
+.pricing__head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 48px; }
+.pricing__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 84px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); max-width: 14ch; }
+.pricing__title .accent { color: var(--yellow-2); font-weight: 700; }
+.pricing__sub { font-size: 17px; line-height: 1.5; color: var(--body); max-width: 50ch; }
+.pricing__table { border-top: 1px solid var(--line-strong); }
+.pricing__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  padding: 22px 0;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  transition: padding-left 0.25s;
+}
+.pricing__row:hover { padding-left: 12px; background: linear-gradient(90deg, rgba(222, 248, 229, 0.5) 0%, transparent 100%); }
+.pricing__row-label { font-size: 16px; color: var(--heading); font-weight: 500; letter-spacing: -0.005em; }
+.pricing__row-price { font-family: Satoshi, sans-serif; font-size: 16px; font-weight: 700; color: var(--heading); white-space: nowrap; background: var(--yellow-bg); padding: 6px 14px; border-radius: 999px; }
+.pricing__success { margin-top: 40px; background: var(--heading); color: var(--white); border-radius: var(--radius-lg); padding: 36px 40px; display: grid; grid-template-columns: 1fr 1.6fr; gap: 32px; align-items: center; }
+.pricing__success-title { font-family: Satoshi, sans-serif; font-weight: 700; font-size: clamp(22px, 2vw, 28px); color: var(--yellow); letter-spacing: -0.01em; }
+.pricing__success-text { font-size: 15px; color: rgba(255, 255, 255, 0.85); line-height: 1.6; }
+
+/* ===== REFERENCES (compact 2-card) ===== */
+.refs2 { background: var(--off-white); padding: var(--section-pad) 0; }
+.refs2__head { margin-bottom: 56px; }
+.refs2__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(36px, 5vw, 72px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); margin-top: 16px; max-width: 14ch; }
+.refs2__title .accent { color: var(--yellow-2); font-weight: 700; }
+.refs2__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.ref2-card { background: var(--white); border-radius: var(--radius-lg); padding: 36px; display: flex; flex-direction: column; gap: 20px; border: 1px solid var(--line); }
+.ref2-card__stars { display: flex; gap: 2px; }
+.ref2-card__stars svg { width: 16px; height: 16px; color: var(--yellow-2); fill: currentColor; }
+.ref2-card__text { color: var(--heading); font-size: 16px; line-height: 1.55; flex: 1; }
+.ref2-card__author { display: flex; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid var(--line); }
+.ref2-card__author img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+.ref2-card__name { font-size: 15px; font-weight: 700; color: var(--heading); }
+.ref2-card__pos { font-size: 13px; color: var(--body); margin-top: 2px; }
+
+/* ===== EXPERT (about Michal mini) ===== */
+.expert { background: var(--white); padding: var(--section-pad) 0; }
+.expert__inner { display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: start; }
+.expert__photo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.expert__head { margin-bottom: 28px; }
+.expert__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(32px, 4vw, 52px); line-height: 0.98; letter-spacing: -0.025em; color: var(--heading); margin-top: 12px; }
+.expert__title .accent { color: var(--yellow-2); font-weight: 700; }
+.expert__bio { font-size: 17px; line-height: 1.55; color: var(--body); max-width: 64ch; margin-bottom: 28px; }
+.cert-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.cert { background: var(--off-white); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.cert__icon { min-width: 40px; height: 40px; padding: 0 10px; border-radius: 8px; background: var(--yellow-bg); display: inline-grid; place-items: center; font-family: Satoshi, sans-serif; font-weight: 700; font-size: 12px; color: var(--yellow-2); letter-spacing: -0.01em; align-self: flex-start; }
+.cert__icon img { width: 18px; height: 18px; object-fit: contain; }
+.cert__title { font-family: Satoshi, sans-serif; font-size: 14px; font-weight: 700; color: var(--heading); letter-spacing: -0.005em; }
+.cert__sub { font-size: 12px; color: var(--body); line-height: 1.4; }
+
+/* ===== NEXT PAGINATION CARD ===== */
+.next { background: var(--white); padding: 60px 0 var(--section-pad); }
+.next__card { display: flex; justify-content: space-between; align-items: center; padding: 48px 56px; background: var(--heading); color: var(--white); border-radius: var(--radius-lg); transition: background 0.2s, transform 0.2s; }
+.next__card:hover { background: var(--heading-2); transform: translateY(-2px); }
+.next__label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); margin-bottom: 12px; }
+.next__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(32px, 4vw, 56px); line-height: 1; letter-spacing: -0.02em; }
+.next__title .accent { color: var(--yellow); font-weight: 700; }
+.next__arrow { width: 64px; height: 64px; border-radius: 50%; background: var(--yellow); color: var(--heading); display: grid; place-items: center; font-size: 24px; flex-shrink: 0; transition: transform 0.25s; }
+.next__card:hover .next__arrow { transform: translateX(8px); }
+
+/* ===== FINAL CTA ===== */
+.fcta { background: var(--heading); color: var(--white); padding: var(--section-pad) 0; }
+.fcta__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; }
+.fcta__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 88px); line-height: 0.97; letter-spacing: -0.03em; color: var(--white); margin: 20px 0 24px; max-width: 14ch; }
+.fcta__title .accent { color: var(--yellow); font-weight: 700; }
+.fcta__sub { font-size: 17px; line-height: 1.5; color: rgba(255, 255, 255, 0.75); max-width: 48ch; margin-bottom: 36px; }
+.fcta__channels { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.fcta__ch { display: grid; grid-template-columns: 110px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.15); align-items: baseline; }
+.fcta__ch:last-child { border-bottom: 0; }
+.fcta__ch-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.55); }
+.fcta__ch-value { font-family: Satoshi, sans-serif; font-size: clamp(17px, 1.4vw, 20px); font-weight: 500; color: var(--white); transition: color 0.2s; }
+a.fcta__ch-value:hover { color: var(--yellow); }
+
+.fcta__form { background: var(--heading-2); border-radius: var(--radius-lg); padding: 40px; }
+.fcta__form-title { font-family: Satoshi, sans-serif; font-size: 26px; font-weight: 700; color: var(--white); margin-bottom: 8px; letter-spacing: -0.015em; }
+.fcta__form-sub { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 28px; }
+.fcta__row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.fcta__field { display: flex; flex-direction: column; gap: 6px; }
+.fcta__field--full { grid-column: 1 / -1; }
+.fcta__field label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.6); }
+.fcta__field input, .fcta__field textarea { background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.25); padding: 12px 0 10px; font-family: Satoshi, sans-serif; font-size: 15px; color: var(--white); font-weight: 500; }
+.fcta__field input::placeholder, .fcta__field textarea::placeholder { color: rgba(255, 255, 255, 0.35); }
+.fcta__field input:focus, .fcta__field textarea:focus { outline: 0; border-bottom-color: var(--yellow); }
+.fcta__field textarea { resize: vertical; min-height: 80px; }
+.fcta__submit { width: 100%; margin-top: 22px; padding: 16px 24px; background: var(--yellow); color: var(--heading); border-radius: 999px; font-weight: 700; font-size: 15px; transition: background 0.2s; }
+.fcta__submit:hover { background: var(--yellow-2); }
+
+/* ===== FOOTER ===== */
+.footer { background: var(--heading); color: var(--white); padding: 80px 0 40px; border-top: 1px solid rgba(255, 255, 255, 0.10); }
+.footer__top { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px 0 56px; border-bottom: 1px solid rgba(255, 255, 255, 0.10); margin-bottom: 56px; }
+.footer__logo { height: clamp(72px, 9vw, 120px); width: auto; }
+.footer__tagline { font-size: 16px; color: rgba(255, 255, 255, 0.6); letter-spacing: 0.04em; }
+.footer__cols { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 48px; margin-bottom: 56px; }
+.footer__col-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.55); margin-bottom: 18px; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer__col a { font-size: 15px; color: rgba(255, 255, 255, 0.85); transition: color 0.2s; }
+.footer__col a:hover { color: var(--yellow); }
+.footer__col p { font-size: 14px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; }
+.footer__bottom { padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, 0.10); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+.footer__bottom a:hover { color: var(--yellow); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 980px) {
+  :root { --pad-x: 22px; --section-pad: 72px; }
+  .nav__menu { display: none; }
+  .nav__burger { display: inline-flex; }
+  .nav__cta { display: none; }
+  .phero { padding: 32px 0 64px; }
+  .phero__crumbs { margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+  .phero__bottom { grid-template-columns: 1fr; gap: 24px; align-items: start; }
+  .phero__meta { margin-top: 40px; gap: 20px; }
+  .pain__head { grid-template-columns: 1fr; gap: 24px; }
+  .pain__grid { grid-template-columns: 1fr 1fr; }
+  .intro__inner { grid-template-columns: 1fr; gap: 48px; }
+  .intro__photo { max-width: 400px; }
+  .sproc__head { grid-template-columns: 1fr; gap: 24px; }
+  .sstep { grid-template-columns: 64px 1fr; gap: 16px; }
+  .pricing__head { grid-template-columns: 1fr; gap: 24px; }
+  .pricing__success { grid-template-columns: 1fr; gap: 16px; padding: 28px; }
+  .refs2__grid { grid-template-columns: 1fr; }
+  .expert__inner { grid-template-columns: 1fr; gap: 32px; }
+  .expert__photo { width: 120px; height: 120px; }
+  .cert-grid { grid-template-columns: 1fr 1fr; }
+  .next__card { flex-direction: column; align-items: flex-start; gap: 24px; padding: 32px; }
+  .fcta__inner { grid-template-columns: 1fr; gap: 56px; }
+  .fcta__row { grid-template-columns: 1fr; }
+  .footer__cols { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 560px) {
+  .pain__grid { grid-template-columns: 1fr; }
+  .cert-grid { grid-template-columns: 1fr; }
+  .footer__cols { grid-template-columns: 1fr; }
+  .intro__widget { right: 12px; bottom: -12px; padding: 14px 16px; }
+  .intro__widget-num { font-size: 28px; }
+}
+
+/* ===== MOBILE NAV DRAWER ===== */
+@media (max-width: 980px) {
+  .nav { position: sticky; }
+  .nav__inner { flex-wrap: wrap; }
+  .nav__menu {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    order: 99;
+    margin: 0;
+    padding: 16px 0 24px;
+    border-top: 1px solid var(--line);
+    background: var(--white);
+  }
+  .nav.is-mobile-open .nav__menu { display: flex; }
+  .nav.is-mobile-open .nav__menu li { width: 100%; }
+  .nav.is-mobile-open .nav__menu .nav__link { display: block; width: 100%; padding: 14px 0; font-size: 18px; font-weight: 600; border-bottom: 1px solid var(--line); }
+  .nav.is-mobile-open .nav__menu .nav__item--dropdown .nav__dropdown { position: static; transform: none; opacity: 1; visibility: visible; width: 100%; box-shadow: none; border: 0; padding: 0 0 8px 0; background: transparent; margin: 0 0 8px 0; }
+  .nav.is-mobile-open .nav__menu .dd-card { padding: 12px 0; border-radius: 0; }
+  .nav.is-mobile-open .nav__menu .dd-card:hover { background: transparent; }
+  .nav.is-mobile-open .nav__cta { display: inline-flex; margin: 16px 0 0; width: 100%; justify-content: center; }
+  .nav__burger { position: relative; z-index: 110; }
+  .nav.is-mobile-open .nav__burger { background: var(--heading); border-color: var(--heading); }
+  .nav.is-mobile-open .nav__burger svg { color: var(--white); }
+}
+
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bezpečný prodej nemovitosti — Mediato">
+<meta property="og:description" content="Příprava nemovitosti k prodeji, expertní cenovka, ošetření vad ještě před inzercí. Prodáte bez reklamací a bez stresu z toho, co přijde po podpisu.">
+<meta property="og:image" content="../../images/Michal_flachs_profil.jpeg">
+<meta property="og:url" content="https://mediato.cz/sluzby/bezpecny-prodej/">
+<meta property="og:locale" content="cs_CZ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bezpečný prodej nemovitosti — Mediato">
+<meta name="twitter:description" content="Příprava nemovitosti k prodeji, expertní cenovka, ošetření vad ještě před inzercí. Prodáte bez reklamací a bez stresu z toho, co přijde po podpisu.">
+<meta name="twitter:image" content="../../images/Michal_flachs_profil.jpeg">
+<link rel="canonical" href="https://mediato.cz/sluzby/bezpecny-prodej/">
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="../../index.html#uvod" class="brand" aria-label="Mediato">
+      <img src="../../images/Mediato_logo.svg" alt="Mediato">
+    </a>
+    <ul class="nav__menu">
+      <li><a href="../../o-nas/index.html" class="nav__link">O nás</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button type="button" class="nav__link nav__link--has-dd is-active" aria-haspopup="true" aria-expanded="false">
+          Služby
+          <svg class="nav__chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1.5L6 6.5L11 1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav__dropdown" role="menu">
+          
+        <a href="../bezpecny-nakup/index.html" class="dd-card">
+          <span class="dd-card__icon"><img src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/68833f195871c66e1e3f2815_001-house.svg" alt=""></span>
+          <span class="dd-card__text">
+            <span class="dd-card__title">Bezpečný nákup</span>
+            <span class="dd-card__sub">Pro kupující — technická, právní i cenová asistence.</span>
+          </span>
+        </a>
+
+        <a href="index.html" class="dd-card is-active">
+          <span class="dd-card__icon"><img src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/68833f5dd1dc385f795baf00_002-handshake.svg" alt=""></span>
+          <span class="dd-card__text">
+            <span class="dd-card__title">Bezpečný prodej</span>
+            <span class="dd-card__sub">Pro prodávající — bez reklamací po podpisu.</span>
+          </span>
+        </a>
+
+        <a href="../realitni-mediator/index.html" class="dd-card">
+          <span class="dd-card__icon"><img src="../../images/services/scales.svg" alt=""></span>
+          <span class="dd-card__text">
+            <span class="dd-card__title">Realitní mediátor</span>
+            <span class="dd-card__sub">Mimosoudní řešení sporů, rychleji než soud.</span>
+          </span>
+        </a>
+
+        <a href="../skryte-vady/index.html" class="dd-card">
+          <span class="dd-card__icon"><img src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/68833f68a154bbf641880f69_003-give.svg" alt=""></span>
+          <span class="dd-card__text">
+            <span class="dd-card__title">Skryté vady</span>
+            <span class="dd-card__sub">Posouzení vady, vyjednání nápravy nebo kompenzace.</span>
+          </span>
+        </a>
+        </div>
+      </li>
+      <li><a href="../../index.html#proces" class="nav__link">Jak to funguje</a></li>
+      <li><a href="../../index.html#reference" class="nav__link">Reference</a></li>
+      <li><a href="../../kontakt/index.html" class="nav__link">Kontakt</a></li>
+    </ul>
+    <a href="../../kontakt/index.html" class="nav__cta">Konzultace zdarma</a>
+    <button class="nav__burger" aria-label="Otevřít menu">
+      <svg viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 1H18M0 6H18M0 11H18" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="phero">
+  <div class="container">
+    <div class="phero__crumbs">
+      <a href="../../index.html#sluzby">↳ Služby</a>
+      <span class="phero__crumbs-num">03 — Bezpečný prodej</span>
+    </div>
+
+    <h1 class="phero__title">Bezpečný <span class="accent">prodej</span> nemovitosti.</h1>
+
+    <div class="phero__bottom">
+      <p class="phero__sub">Prodejte v klidu — a zůstaňte v klidu i po prodeji. Postaráme se o to, aby vám kupující nemohl po podpisu nic vytknout. Technicky, právně i dokumentačně.</p>
+      <div class="phero__cta">
+        <a href="#kontakt" class="btn btn--primary">Chci prodat bez rizika</a>
+        <a href="#proces" class="btn btn--ghost">Jak to funguje</a>
+      </div>
+    </div>
+
+    <div class="phero__meta">
+      <div class="phero__recenze">
+        <div class="phero__recenze-photos">
+          <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb73e617ea4203566b04_Recenzenti02.avif" alt="">
+          <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb74e4a610bb859279c4_Recenzenti04.avif" alt="">
+          <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb73da50d9e38b80b1d2_Recenzenti06.avif" alt="">
+        </div>
+        <div>
+          <div class="phero__stars">
+            <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          </div>
+          <div class="phero__rec-text"><strong>50+</strong> spokojených klientů · hodnocení 5 / 5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN POINTS -->
+<section class="pain">
+  <div class="container">
+    <div class="pain__head">
+      <div>
+        <span class="eyebrow">Proč to řešit</span>
+        <h2 class="pain__title" style="margin-top:18px;">I úspěšný prodej <span class="accent">může mít nepříjemnou dohru.</span></h2>
+      </div>
+      <p class="lead">Peníze jsou na účtu, klíče předány — ale kupující se ozve s reklamací. Bez správné přípravy jste ve slabé pozici.</p>
+    </div>
+    <div class="pain__grid">
+        <div class="pain__card">
+          <div class="pain__card-num">01</div>
+          <h3 class="pain__card-title">Reklamace po prodeji</h3>
+          <p class="pain__card-desc">Kupující může měsíce či roky po prodeji tvrdit, že jste zamlčeli vadu. Bez dokumentace se bráníte těžko.</p>
+        </div>
+        <div class="pain__card">
+          <div class="pain__card-num">02</div>
+          <h3 class="pain__card-title">Zpochybnění ceny</h3>
+          <p class="pain__card-desc">Pokud nebyl k prodeji přiložen odborný posudek technického stavu nemovitosti, může kupující při objevení skrytých vad chtít vratku z kupní ceny.</p>
+        </div>
+        <div class="pain__card">
+          <div class="pain__card-num">03</div>
+          <h3 class="pain__card-title">Nedotažené smlouvy</h3>
+          <p class="pain__card-desc">Standardní smlouvy od makléře chrání obecně obě strany, nicméně často zde špatně definují stav nemovitosti.</p>
+        </div>
+        <div class="pain__card">
+          <div class="pain__card-num">04</div>
+          <h3 class="pain__card-title">Zdlouhavý spor</h3>
+          <p class="pain__card-desc">Realitní spory patří k nejdelším. Správná příprava před prodejem je mnohonásobně levnější než jejich řešení.</p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="container">
+    <div class="intro__inner">
+      <div class="intro__visual">
+        <img class="intro__photo" src="../../images/Michal_flachs_profil.jpeg" alt="Michal Flachs">
+        <div class="intro__widget">
+          <div class="intro__widget-num">20+</div>
+          <div class="intro__widget-label"><strong>let praxe</strong>v realitách</div>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow eyebrow--green">Naše služba</span>
+        <h2 class="intro__title">Prodejte s čistým svědomím <span class="accent">i čistým stolem.</span></h2>
+        <p class="intro__para">Před prodejem provedeme nezávislou technickou inspekci nemovitosti, zajistíme odborné ocenění a zkontrolujeme veškerou dokumentaci. Kupující dostane přesný obraz stavu — a vy máte průkazný doklad, že jste nic nezamlčeli.</p>
+        <div class="intro__checks">
+        <div class="intro__check">
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="10"/><path d="M6.5 11.5L9.5 14.5L15.5 8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Technická inspekce a zdokumentování stavu nemovitosti</span>
+        </div>
+        <div class="intro__check">
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="10"/><path d="M6.5 11.5L9.5 14.5L15.5 8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Nezávislé ocenění — podklad pro obhajobu ceny</span>
+        </div>
+        <div class="intro__check">
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="10"/><path d="M6.5 11.5L9.5 14.5L15.5 8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Právní kontrola smluv ve váš prospěch</span>
+        </div>
+        <div class="intro__check">
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="10"/><path d="M6.5 11.5L9.5 14.5L15.5 8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Příprava předávacího protokolu bez mezer</span>
+        </div>
+        <div class="intro__check">
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="10"/><path d="M6.5 11.5L9.5 14.5L15.5 8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Asistence při předání a finalizaci transakce</span>
+        </div>
+        </div>
+        <div class="intro__cta">
+          <a href="#kontakt" class="btn btn--primary">Konzultace zdarma</a>
+          <a href="https://www.linkedin.com/in/michal-flachs-58b542356/" target="_blank" rel="noopener" class="btn btn--ghost">Profil na LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sproc" id="proces">
+  <div class="container">
+    <div class="sproc__head">
+      <div>
+        <span class="eyebrow">Jak to funguje</span>
+        <h2 class="sproc__title" style="margin-top:18px;">Jak spolupracujeme <span class="accent">krok za krokem.</span></h2>
+      </div>
+      <p class="sproc__intro">Příprava nemovitosti k prodeji od první konzultace až po předání. Žádná reklamace, žádný dohra.</p>
+    </div>
+    <div class="sproc__list">
+      <div class="sstep">
+        <div class="sstep__num">01</div>
+        <div>
+          <h3 class="sstep__title">Vstupní konzultace a posouzení situace</h3>
+          <p class="sstep__desc">Zjistíme, v jakém stavu nemovitost je, co plánujete a jaká rizika mohou hrozit. Navrhneme, co je potřeba ošetřit ještě před inzerátem.</p>
+        </div>
+      </div>
+      <div class="sstep">
+        <div class="sstep__num">02</div>
+        <div>
+          <h3 class="sstep__title">Technická inspekce nemovitosti</h3>
+          <p class="sstep__desc">Provedeme nezávislou prohlídku a zdokumentujeme skutečný stav nemovitosti — včetně případných vad. Transparentnost chrání vás, ne kupujícího.</p>
+        </div>
+      </div>
+      <div class="sstep">
+        <div class="sstep__num">03</div>
+        <div>
+          <h3 class="sstep__title">Ocenění a příprava podkladů</h3>
+          <p class="sstep__desc">Zajistíme nezávislý odhad tržní ceny a zkompletujeme veškerou dokumentaci — od listu vlastnictví po energetický štítek a stavební výkresy.</p>
+        </div>
+      </div>
+      <div class="sstep">
+        <div class="sstep__num">04</div>
+        <div>
+          <h3 class="sstep__title">Právní kontrola smluv</h3>
+          <p class="sstep__desc">Ve spolupráci s advokáty zkontrolujeme kupní smlouvu, rezervační smlouvu i smlouvu o úschově tak, aby chránily vaše zájmy.</p>
+        </div>
+      </div>
+      <div class="sstep">
+        <div class="sstep__num">05</div>
+        <div>
+          <h3 class="sstep__title">Předání nemovitosti bez mezer</h3>
+          <p class="sstep__desc">Asistujeme při fyzickém předání, sepíšeme detailní předávací protokol a zajistíme, aby po prodeji nezůstala žádná otevřená otázka.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="container">
+    <div class="pricing__head">
+      <div>
+        <span class="eyebrow eyebrow--green">Ceník</span>
+        <h2 class="pricing__title" style="margin-top:18px;">Transparentní ceník <span class="accent">bez překvapení.</span></h2>
+      </div>
+      <p class="pricing__sub">Volte jednotlivé služby podle potřeby, nebo využijte komplexní asistenci od přípravy po předání.</p>
+    </div>
+    <div class="pricing__table">
+      <div class="pricing__row">
+        <span class="pricing__row-label">Vstupní konzultace a posouzení rizik prodeje</span>
+        <span class="pricing__row-price">5 000 Kč</span>
+      </div>
+      <div class="pricing__row">
+        <span class="pricing__row-label">Technická inspekce a zdokumentování stavu</span>
+        <span class="pricing__row-price">12 000 Kč</span>
+      </div>
+      <div class="pricing__row">
+        <span class="pricing__row-label">Nezávislé ocenění nemovitosti</span>
+        <span class="pricing__row-price">8 000 Kč</span>
+      </div>
+      <div class="pricing__row">
+        <span class="pricing__row-label">Příprava a kompletace dokumentace</span>
+        <span class="pricing__row-price">5 000 Kč</span>
+      </div>
+      <div class="pricing__row">
+        <span class="pricing__row-label">Právní kontrola smluv (advokát)</span>
+        <span class="pricing__row-price">8 000–15 000 Kč</span>
+      </div>
+      <div class="pricing__row">
+        <span class="pricing__row-label">Asistence při předání a předávací protokol</span>
+        <span class="pricing__row-price">5 000 Kč</span>
+      </div>
+      <div class="pricing__row">
+        <span class="pricing__row-label">Komplexní asistence od přípravy po předání</span>
+        <span class="pricing__row-price">individuální nabídka</span>
+      </div>
+    </div>
+    <div class="pricing__success">
+      <div class="pricing__success-title">Proč se to vyplatí?</div>
+      <div class="pricing__success-text">Náklady na přípravu prodeje jsou zlomkem toho, co může stát soudní spor nebo mimosoudní vyrovnání s nespokojným kupujícím. Investice do bezpečného prodeje je investicí do klidu po prodeji.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section class="refs2">
+  <div class="container">
+    <div class="refs2__head">
+      <span class="eyebrow">Reference</span>
+      <h2 class="refs2__title">Co říkají <span class="accent">naši klienti.</span></h2>
+    </div>
+    <div class="refs2__grid">
+      <div class="ref2-card">
+        <div class="ref2-card__stars">
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+        </div>
+        <p class="ref2-card__text">„Prodávali jsme po rodičích starší dům a chtěli mít jistotu, že nás po podpisu nepřekvapí reklamace. Michal nemovitost prošel, doporučil, co před prodejem zveřejnit a jak nastavit smlouvu. Prodali jsme bez stresu."</p>
+        <div class="ref2-card__author">
+          <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb73e617ea4203566b04_Recenzenti02.avif" alt="">
+          <div>
+            <div class="ref2-card__name">Marie H.</div>
+            <div class="ref2-card__pos">Středočeský kraj · prodávající</div>
+          </div>
+        </div>
+      </div>
+      <div class="ref2-card">
+        <div class="ref2-card__stars">
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+        </div>
+        <p class="ref2-card__text">„Před prodejem bytu jsme nechali udělat technickou inspekci. Vyšlo pár věcí, které jsme transparentně zveřejnili v inzerátu. Žádné dohadování, žádná reklamace — prodej proběhl naprosto hladce."</p>
+        <div class="ref2-card__author">
+          <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb74e4a610bb859279c4_Recenzenti04.avif" alt="">
+          <div>
+            <div class="ref2-card__name">Petr a Lenka S.</div>
+            <div class="ref2-card__pos">Praha · prodávající</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERT -->
+<section class="expert">
+  <div class="container">
+    <div class="expert__inner">
+      <img class="expert__photo" src="../../images/Michal_flachs_profil.jpeg" alt="Michal Flachs">
+      <div>
+        <div class="expert__head">
+          <span class="eyebrow eyebrow--green">Kdo to dělá</span>
+          <h2 class="expert__title">Michal Flachs, <span class="accent">zakladatel Mediato.</span></h2>
+        </div>
+        <p class="expert__bio">Certifikovaný inspektor nemovitostí, odhadce majetku a mediátor s 20 lety praxe v realitách. Prošel hypotékami, investicemi, prodejem, vadami staveb i spory mezi lidmi.</p>
+        <div class="cert-grid">
+          <div class="cert">
+            <div class="cert__icon">AIN</div>
+            <div class="cert__title">Certifikovaný inspektor</div>
+            <div class="cert__sub">Asociace inspektorů nemovitostí</div>
+          </div>
+          <div class="cert">
+            <div class="cert__icon">ČKOM</div>
+            <div class="cert__title">Odhadce majetku</div>
+            <div class="cert__sub">Česká komora odhadců</div>
+          </div>
+          <div class="cert">
+            <div class="cert__icon">AMČR</div>
+            <div class="cert__title">Certifikovaný mediátor</div>
+            <div class="cert__sub">Asociace mediátorů ČR</div>
+          </div>
+          <div class="cert">
+            <div class="cert__icon">NTU</div>
+            <div class="cert__title">LL.M., MBA, DBA</div>
+            <div class="cert__sub">Právo v realitní praxi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT PAGINATION -->
+<section class="next">
+  <div class="container">
+    <a href="../realitni-mediator/index.html" class="next__card">
+      <div>
+        <div class="next__label">Další služba</div>
+        <div class="next__title">Realitní <span class="accent">mediátor</span></div>
+      </div>
+      <span class="next__arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="fcta" id="kontakt">
+  <div class="container">
+    <div class="fcta__inner">
+      <div>
+        <span class="eyebrow eyebrow--light">Začněme</span>
+        <h2 class="fcta__title">Začněte bezplatnou <span class="accent">konzultací.</span></h2>
+        <p class="fcta__sub">Zavoláme si 20 minut zdarma. Projdeme vaši situaci a řekneme vám rovnou, jak vám můžeme pomoci — bez závazků.</p>
+
+        <ul class="fcta__channels">
+          <li class="fcta__ch">
+            <span class="fcta__ch-label">Telefon</span>
+            <a href="tel:+420606101121" class="fcta__ch-value">+420 606 101 121</a>
+          </li>
+          <li class="fcta__ch">
+            <span class="fcta__ch-label">E-mail</span>
+            <a href="mailto:info@mediato.cz" class="fcta__ch-value">info@mediato.cz</a>
+          </li>
+          <li class="fcta__ch">
+            <span class="fcta__ch-label">Sídlo</span>
+            <span class="fcta__ch-value">Tiskařská 257/10, Praha 10</span>
+          </li>
+        </ul>
+      </div>
+
+      <form class="fcta__form" onsubmit="event.preventDefault(); alert('Děkujeme, ozveme se do 24 hodin.');">
+        <div class="fcta__form-title">Objednejte si konzultaci</div>
+        <div class="fcta__form-sub">Vyplňte krátký formulář — ozveme se do 24 hodin.</div>
+        <div class="fcta__row">
+          <div class="fcta__field"><label for="f-name">Jméno</label><input id="f-name" type="text" placeholder="Vaše jméno" required></div>
+          <div class="fcta__field"><label for="f-phone">Telefon / e-mail</label><input id="f-phone" type="text" placeholder="+420 nebo @" required></div>
+        </div>
+        <div class="fcta__row">
+          <div class="fcta__field fcta__field--full"><label for="f-msg">Krátký popis situace (volitelné)</label><textarea id="f-msg" placeholder="Co se děje? Jaký je váš cíl?"></textarea></div>
+        </div>
+        <button type="submit" class="fcta__submit">Odeslat a objednat konzultaci →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <img class="footer__logo" src="../../images/Mediato_logo_light.svg" alt="Mediato">
+      <div class="footer__tagline">Lépe. Lidsky. Smírně.</div>
+    </div>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <div class="footer__col-title">Provozovatel</div>
+        <p>Mediato CZ s.r.o.<br>Tiskařská 257/10<br>108 00 Praha 10 — Malešice</p>
+        <p style="margin-top:14px;">IČO: 04917251 · DIČ: CZ04917251<br>OR: C 255588, Městský soud v Praze</p>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Služby</div>
+        <ul>
+          <li><a href="../bezpecny-nakup/index.html">Bezpečný nákup</a></li>
+          <li><a href="index.html">Bezpečný prodej</a></li>
+          <li><a href="../realitni-mediator/index.html">Realitní mediátor</a></li>
+          <li><a href="../skryte-vady/index.html">Skryté vady</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Mediato</div>
+        <ul>
+          <li><a href="../../o-nas/index.html">O nás</a></li>
+          <li><a href="../../index.html#proces">Jak to funguje</a></li>
+          <li><a href="../../index.html#reference">Reference</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Kontakt</div>
+        <ul>
+          <li><a href="tel:+420606101121">+420 606 101 121</a></li>
+          <li><a href="mailto:info@mediato.cz">info@mediato.cz</a></li>
+          <li><a href="https://www.linkedin.com/in/michal-flachs-58b542356/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Mediato CZ s.r.o. · Všechna práva vyhrazena.</span>
+      <span><a href="../zasady-ochrany-osobnich-udaju.html">Zásady ochrany osobních údajů</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll state
+var nav = document.getElementById('nav');
+window.addEventListener('scroll', function(){ if (window.scrollY > 40) nav.classList.add('is-scrolled'); else nav.classList.remove('is-scrolled'); });
+
+// Mobile dropdown toggle (touch)
+document.querySelectorAll('.nav__link--has-dd').forEach(function(btn){
+  btn.addEventListener('click', function(e){
+    var item = btn.closest('.nav__item--dropdown');
+    if (window.matchMedia('(hover: none)').matches) {
+      e.preventDefault();
+      item.classList.toggle('is-open');
+    }
+  });
+});
+</script>
+
+<script>
+(function fixOrphans(){
+  var SHORT = /(^|\s)([ksvzaiou]|do|na|po|ve|ze|se|ku|že|by|či|ne)\s+/gi;
+  function walk(node){
+    if (node.nodeType === 3) {
+      if (/[a-zěščřžýáíéúůďťňó]/i.test(node.nodeValue) && node.nodeValue.indexOf('\u00a0') === -1) {
+        node.nodeValue = node.nodeValue.replace(SHORT, function(m, pre, word){ return pre + word + '\u00a0'; });
+      }
+    } else if (node.nodeType === 1) {
+      var tag = node.tagName;
+      if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'CODE' || tag === 'PRE') return;
+      for (var i = 0; i < node.childNodes.length; i++) walk(node.childNodes[i]);
+    }
+  }
+  walk(document.body);
+})();
+</script>
+<script>
+// Mobile burger toggle
+(function(){
+  var burger = document.querySelector('.nav__burger');
+  var nav = document.getElementById('nav');
+  if (!burger || !nav) return;
+  burger.addEventListener('click', function(){
+    nav.classList.toggle('is-mobile-open');
+    burger.setAttribute('aria-expanded', nav.classList.contains('is-mobile-open') ? 'true' : 'false');
+  });
+  // Close drawer when clicking any nav link inside
+  document.querySelectorAll('.nav__menu .nav__link:not(.nav__link--has-dd), .nav__menu .dd-card, .nav__cta').forEach(function(el){
+    el.addEventListener('click', function(){ nav.classList.remove('is-mobile-open'); });
+  });
+})();
+</script>
+</body>
+</html>

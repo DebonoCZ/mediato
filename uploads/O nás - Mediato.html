@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O nás — Mediato</title>
+<meta name="description" content="Mediato vzniklo z osobní zkušenosti zakladatele Michala Flachse. 20 let praxe v realitách, 1200+ případů, 200+ pozorovaných soudních sporů.">
+<link rel="icon" href="images/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Light.otf') format('opentype');   font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Medium.otf') format('opentype');  font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Bold.otf') format('opentype');    font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Black.otf') format('opentype');   font-weight: 900; font-style: normal; font-display: swap; }
+
+:root {
+  --yellow: #5edd79; --yellow-2: #4ac766; --yellow-bg: #def8e5;
+  --heading: #1c1e4f; --heading-2: #2a2d6e;
+  --body: #545686; --purple: #4e3bf0;
+  --white: #ffffff; --off-white: #f7f7f9;
+  --line: rgba(28, 30, 79, 0.10);
+  --line-strong: rgba(28, 30, 79, 0.20);
+  --line-light: rgba(255, 255, 255, 0.16);
+  --container: 1320px; --pad-x: 40px;
+  --section-pad: 140px;
+  --radius: 16px; --radius-lg: 24px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: Satoshi, Ubuntu, system-ui, sans-serif; font-size: 17px; line-height: 1.55; color: var(--body); background: var(--white); }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
+
+.eyebrow { display: inline-flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--heading); }
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; opacity: 0.5; }
+.eyebrow--green { color: var(--yellow-2); }
+.eyebrow--light { color: rgba(255, 255, 255, 0.7); }
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad-x); width: 100%; }
+.lead { font-size: clamp(18px, 1.3vw, 22px); line-height: 1.45; color: var(--body); max-width: 56ch; font-weight: 400; }
+
+.btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 30px; font-family: Satoshi, sans-serif; font-weight: 700; font-size: 15px; border-radius: 999px; letter-spacing: -0.005em; transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s; white-space: nowrap; }
+.btn::after { content: "→"; font-size: 18px; transition: transform 0.25s; }
+.btn:hover::after { transform: translateX(4px); }
+.btn--primary { background: var(--yellow); color: var(--heading); }
+.btn--primary:hover { background: var(--yellow-2); }
+.btn--dark { background: var(--heading); color: var(--white); }
+.btn--dark:hover { background: var(--heading-2); }
+.btn--ghost { background: transparent; color: var(--heading); border: 1.5px solid var(--line-strong); padding: 16.5px 28.5px; }
+.btn--ghost:hover { background: var(--heading); color: var(--white); border-color: var(--heading); }
+.btn--ghost-light { background: transparent; color: var(--white); border: 1.5px solid var(--line-light); padding: 16.5px 28.5px; }
+.btn--ghost-light:hover { background: var(--yellow); color: var(--heading); border-color: var(--yellow); }
+.btn--ghost::after { font-size: 18px; }
+
+/* ===== NAV ===== */
+.nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid transparent; transition: background 0.3s, border-color 0.3s; }
+.nav.is-scrolled { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom-color: var(--line); }
+.nav__inner { display: flex; align-items: center; justify-content: space-between; padding: 20px var(--pad-x); max-width: var(--container); margin: 0 auto; gap: 32px; }
+.brand img { height: 32px; width: auto; }
+.nav__menu { display: flex; align-items: center; gap: 36px; list-style: none; }
+.nav__link { font-size: 14px; font-weight: 500; color: var(--heading); padding: 6px 0; transition: color 0.2s; }
+.nav__link:hover { color: var(--yellow-2); }
+.nav__link.is-active { color: var(--yellow-2); }
+.nav__cta { background: var(--yellow); color: var(--heading); font-size: 14px; font-weight: 700; padding: 12px 22px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.2s; }
+.nav__cta::after { content: "→"; font-size: 16px; }
+.nav__cta:hover { background: var(--yellow-2); transform: translateY(-1px); }
+.nav__burger { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; border: 1px solid var(--line-strong); border-radius: 999px; }
+.nav__burger svg { width: 18px; height: 18px; color: var(--heading); }
+
+/* Dropdown */
+.nav__link--has-dd { display: inline-flex; align-items: center; gap: 6px; }
+.nav__chevron { width: 10px; height: 7px; transition: transform 0.25s; }
+.nav__item--dropdown { position: relative; }
+.nav__item--dropdown:hover .nav__chevron,
+.nav__item--dropdown.is-open .nav__chevron { transform: rotate(180deg); }
+.nav__dropdown {
+  position: absolute; top: calc(100% + 16px); left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  width: 540px; background: var(--white);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: 0 30px 80px -20px rgba(28, 30, 79, 0.20), 0 8px 24px -8px rgba(28, 30, 79, 0.10);
+  padding: 14px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.2s, transform 0.25s, visibility 0.2s;
+  z-index: 200;
+}
+.nav__dropdown::before { content: ""; position: absolute; top: -8px; left: 0; right: 0; height: 24px; }
+.nav__item--dropdown:hover .nav__dropdown,
+.nav__item--dropdown:focus-within .nav__dropdown,
+.nav__item--dropdown.is-open .nav__dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+.dd-card { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-radius: 14px; transition: background 0.2s; }
+.dd-card:hover, .dd-card:focus { background: var(--yellow-bg); }
+.dd-card__icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: var(--yellow-bg); display: grid; place-items: center; transition: background 0.2s; }
+.dd-card:hover .dd-card__icon { background: var(--yellow); }
+.dd-card__icon img { width: 22px; height: 22px; }
+.dd-card__text { display: flex; flex-direction: column; gap: 2px; }
+.dd-card__title { font-family: Satoshi, sans-serif; font-size: 15px; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+.dd-card__sub { font-size: 12px; color: var(--body); line-height: 1.4; }
+
+/* ===== HERO (compact, opinionated) ===== */
+.ahero { background: var(--white); padding: 56px 0 88px; position: relative; overflow: hidden; }
+.ahero__crumbs { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: var(--body); margin-bottom: 56px; text-transform: uppercase; }
+.ahero__crumbs a { transition: color 0.2s; }
+.ahero__crumbs a:hover { color: var(--heading); }
+.ahero__crumbs-num { font-variant-numeric: tabular-nums; opacity: 0.6; }
+.ahero__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(56px, 9vw, 156px); line-height: 0.92; letter-spacing: -0.035em; color: var(--heading); max-width: 14ch; }
+.ahero__title .accent { color: var(--yellow-2); font-weight: 700; }
+.ahero__bottom { margin-top: 56px; display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: end; }
+.ahero__sub { font-size: clamp(18px, 1.3vw, 22px); line-height: 1.5; color: var(--body); max-width: 56ch; font-weight: 400; }
+.ahero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ===== STATS ===== */
+.stats-section { background: var(--off-white); padding: 96px 0; }
+.stats-section__head { margin-bottom: 56px; max-width: 80ch; }
+.stats-section__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(36px, 4.5vw, 64px); line-height: 1.02; letter-spacing: -0.025em; color: var(--heading); margin-top: 20px; max-width: 22ch; }
+.stats-section__title .accent { color: var(--yellow-2); font-weight: 700; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; background: var(--white); border-radius: var(--radius-lg); padding: 8px; box-shadow: 0 1px 0 var(--line); border: 1px solid var(--line); }
+.stat { padding: 36px 28px; position: relative; }
+.stat + .stat::before { content: ""; position: absolute; left: 0; top: 24px; bottom: 24px; width: 1px; background: var(--line); }
+.stat__num { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(48px, 5vw, 80px); line-height: 0.95; letter-spacing: -0.03em; color: var(--heading); display: flex; align-items: baseline; gap: 6px; }
+.stat__num small { font-size: 0.32em; font-weight: 700; color: var(--body); letter-spacing: 0.02em; text-transform: uppercase; }
+.stat__num .num-accent { color: var(--yellow-2); font-weight: 700; }
+.stat__label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--heading); margin: 20px 0 8px; }
+.stat__desc { font-size: 13px; color: var(--body); line-height: 1.5; }
+
+/* ===== STORY (expandable) ===== */
+.story { background: var(--white); padding: var(--section-pad) 0; }
+.story__head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 48px; }
+.story__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 84px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); max-width: 14ch; margin-top: 16px; }
+.story__title .accent { color: var(--yellow-2); font-weight: 700; }
+.story__intro-note { font-size: 14px; color: var(--body); line-height: 1.55; max-width: 44ch; }
+.story__intro-note strong { color: var(--heading); }
+
+/* Author card — clear marker this is Michal's personal story */
+.story__author {
+  display: flex; align-items: center; gap: 18px;
+  padding: 22px 28px;
+  background: var(--yellow-bg);
+  border-radius: 999px;
+  width: fit-content;
+  margin-bottom: 36px;
+  border: 1px solid rgba(74, 199, 102, 0.25);
+}
+.story__author-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.story__author-text { display: flex; flex-direction: column; gap: 2px; }
+.story__author-name { font-size: 15px; font-weight: 700; color: var(--heading); letter-spacing: -0.005em; }
+.story__author-role { font-size: 12px; color: var(--body); letter-spacing: 0.02em; }
+.story__author-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--yellow-2); }
+
+/* Story body — teaser visible, rest collapsible */
+.story__body { max-width: 760px; }
+.story__lede {
+  font-family: Satoshi, sans-serif;
+  font-weight: 300;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--heading);
+  margin-bottom: 28px;
+}
+.story__lede strong { font-weight: 700; color: var(--heading); }
+.story__teaser p { font-size: 17px; line-height: 1.65; color: var(--body); margin-bottom: 16px; }
+.story__teaser p strong { color: var(--heading); font-weight: 700; }
+.story__fade { position: relative; }
+
+.story__full {
+  display: none;
+}
+.story.is-expanded .story__full { display: block; }
+.story__full p { font-size: 17px; line-height: 1.65; color: var(--body); margin-bottom: 16px; }
+.story__full p strong { color: var(--heading); font-weight: 700; }
+.story__quote {
+  margin: 36px 0;
+  padding: 24px 32px;
+  border-left: 3px solid var(--yellow);
+  font-family: Satoshi, sans-serif;
+  font-weight: 300;
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.35;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+}
+.story__quote-attr {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--body);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.story__signature {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.story__signature-name { font-family: Satoshi, sans-serif; font-style: italic; font-size: 22px; font-weight: 500; color: var(--heading); }
+.story__signature-role { font-size: 14px; color: var(--body); margin-top: 4px; }
+.story__linkedin { font-size: 14px; color: var(--body); margin-top: 18px; }
+.story__linkedin a { color: var(--yellow-2); font-weight: 700; }
+.story__linkedin a:hover { text-decoration: underline; }
+
+/* Photo with year bubble */
+.story__photo {
+  margin: 36px 0;
+  position: relative;
+}
+.story__photo img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  display: block;
+  border: 1px solid var(--line);
+}
+.story__year-bubble {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: var(--heading);
+  color: var(--yellow);
+  font-family: Satoshi, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  padding: 12px 20px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px -8px rgba(28, 30, 79, 0.4);
+}
+.story__photo-caption {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--body);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.story__photo-caption::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--yellow-2);
+  flex-shrink: 0;
+}
+.story__photo-caption strong { color: var(--heading); font-weight: 700; }
+
+/* Toggle button */
+.story__toggle {
+  margin-top: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 999px;
+  font-family: Satoshi, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--heading);
+  background: var(--white);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.story__toggle:hover { background: var(--heading); color: var(--white); border-color: var(--heading); }
+.story__toggle svg { width: 14px; height: 14px; transition: transform 0.3s; }
+.story.is-expanded .story__toggle svg { transform: rotate(180deg); }
+.story__toggle-label-collapsed { display: inline; }
+.story__toggle-label-expanded { display: none; }
+.story.is-expanded .story__toggle-label-collapsed { display: none; }
+.story.is-expanded .story__toggle-label-expanded { display: inline; }
+
+/* Subtle fade hint when collapsed */
+.story__teaser-fade {
+  position: relative;
+}
+.story:not(.is-expanded) .story__teaser-fade::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 80px;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, var(--white) 100%);
+  pointer-events: none;
+}
+
+/* ===== VALUES (3 cards) ===== */
+.values { background: var(--yellow-bg); padding: var(--section-pad) 0; }
+.values__head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 64px; }
+.values__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 84px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); max-width: 14ch; margin-top: 20px; }
+.values__title .accent { color: var(--yellow-2); font-weight: 700; }
+.values__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.value-card { background: var(--white); border-radius: var(--radius-lg); padding: 36px 32px; display: flex; flex-direction: column; gap: 16px; border: 1px solid rgba(74, 199, 102, 0.15); transition: transform 0.25s, border-color 0.25s; }
+.value-card:hover { transform: translateY(-3px); border-color: rgba(74, 199, 102, 0.4); }
+.value-card__num { font-family: Satoshi, sans-serif; font-weight: 700; font-size: 13px; color: var(--yellow-2); letter-spacing: 0.06em; }
+.value-card__title { font-family: Satoshi, sans-serif; font-size: clamp(26px, 2.2vw, 36px); font-weight: 700; color: var(--heading); letter-spacing: -0.015em; line-height: 1.05; }
+.value-card__title .accent { color: var(--yellow-2); }
+.value-card__desc { font-size: 15px; line-height: 1.6; color: var(--body); margin-top: 8px; }
+
+/* ===== UNDER ONE ROOF ===== */
+.roof { background: var(--white); padding: var(--section-pad) 0; }
+.roof__inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 96px; align-items: start; }
+.roof__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 80px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); max-width: 12ch; margin-top: 20px; }
+.roof__title .accent { color: var(--yellow-2); font-weight: 700; }
+.roof__lede { font-size: 17px; line-height: 1.6; color: var(--body); margin-top: 24px; max-width: 48ch; }
+.roof__list { display: flex; flex-direction: column; gap: 0; }
+.roof__item { display: grid; grid-template-columns: 56px 1fr auto; gap: 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--line); }
+.roof__item:first-child { border-top: 1px solid var(--line-strong); }
+.roof__item:last-child { border-bottom: 1px solid var(--line-strong); }
+.roof__item-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--yellow-bg); display: grid; place-items: center; }
+.roof__item-icon svg { width: 28px; height: 28px; color: var(--yellow-2); }
+.roof__item-text { display: flex; flex-direction: column; gap: 4px; }
+.roof__item-title { font-family: Satoshi, sans-serif; font-size: 19px; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+.roof__item-desc { font-size: 14px; color: var(--body); line-height: 1.5; }
+.roof__item-badge { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--yellow-2); background: var(--yellow-bg); padding: 6px 12px; border-radius: 999px; }
+
+/* ===== CREDENTIALS ===== */
+.creds-section { background: var(--off-white); padding: var(--section-pad) 0; }
+.creds-section__head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 64px; }
+.creds-section__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 80px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); max-width: 14ch; margin-top: 20px; }
+.creds-section__title .accent { color: var(--yellow-2); font-weight: 700; }
+.cred-list { display: flex; flex-direction: column; border-top: 1px solid var(--line-strong); }
+.cred { display: grid; grid-template-columns: 80px 1fr 2fr auto; gap: 28px; padding: 24px 0; border-bottom: 1px solid var(--line); align-items: center; transition: padding 0.25s; }
+.cred:hover { padding-left: 12px; }
+.cred__logo { width: 56px; height: 56px; background: var(--white); border-radius: 12px; display: grid; place-items: center; padding: 8px; box-shadow: 0 0 0 1px var(--line); }
+.cred__logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.cred__name { font-family: Satoshi, sans-serif; font-size: 17px; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+.cred__role { font-size: 13px; color: var(--body); margin-top: 2px; }
+.cred__focus { font-size: 14px; color: var(--body); line-height: 1.5; max-width: 52ch; }
+.cred__focus strong { color: var(--heading); font-weight: 700; }
+.cred__type { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--heading); background: var(--yellow-bg); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+
+/* ===== MEDIA BAR ===== */
+.mediabar { background: var(--white); padding: 96px 0; }
+.mediabar__head { text-align: center; margin-bottom: 40px; }
+.mediabar__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(28px, 3vw, 44px); line-height: 1; letter-spacing: -0.02em; color: var(--heading); margin-top: 12px; }
+.mediabar__logos { display: flex; align-items: center; justify-content: center; gap: clamp(32px, 5vw, 72px); flex-wrap: wrap; padding-top: 32px; border-top: 1px solid var(--line); }
+.mediabar__logo { max-height: 38px; max-width: 140px; width: auto; height: auto; filter: grayscale(1) opacity(0.55); transition: filter 0.25s; object-fit: contain; }
+.mediabar__logo:hover { filter: grayscale(0) opacity(1); }
+
+/* ===== FINAL CTA ===== */
+.fcta { background: var(--heading); color: var(--white); padding: var(--section-pad) 0; }
+.fcta__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; }
+.fcta__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 88px); line-height: 0.97; letter-spacing: -0.03em; color: var(--white); margin: 20px 0 24px; max-width: 14ch; }
+.fcta__title .accent { color: var(--yellow); font-weight: 700; }
+.fcta__sub { font-size: 17px; line-height: 1.5; color: rgba(255, 255, 255, 0.75); max-width: 48ch; margin-bottom: 36px; }
+.fcta__channels { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.fcta__ch { display: grid; grid-template-columns: 110px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.15); align-items: baseline; }
+.fcta__ch:last-child { border-bottom: 0; }
+.fcta__ch-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.55); }
+.fcta__ch-value { font-family: Satoshi, sans-serif; font-size: clamp(17px, 1.4vw, 20px); font-weight: 500; color: var(--white); transition: color 0.2s; }
+a.fcta__ch-value:hover { color: var(--yellow); }
+
+.fcta__form { background: var(--heading-2); border-radius: var(--radius-lg); padding: 40px; }
+.fcta__form-title { font-family: Satoshi, sans-serif; font-size: 26px; font-weight: 700; color: var(--white); margin-bottom: 8px; letter-spacing: -0.015em; }
+.fcta__form-sub { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 28px; }
+.fcta__row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.fcta__field { display: flex; flex-direction: column; gap: 6px; }
+.fcta__field--full { grid-column: 1 / -1; }
+.fcta__field label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.6); }
+.fcta__field input, .fcta__field textarea { background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.25); padding: 12px 0 10px; font-family: Satoshi, sans-serif; font-size: 15px; color: var(--white); font-weight: 500; }
+.fcta__field input::placeholder, .fcta__field textarea::placeholder { color: rgba(255, 255, 255, 0.35); }
+.fcta__field input:focus, .fcta__field textarea:focus { outline: 0; border-bottom-color: var(--yellow); }
+.fcta__field textarea { resize: vertical; min-height: 80px; }
+.fcta__submit { width: 100%; margin-top: 22px; padding: 16px 24px; background: var(--yellow); color: var(--heading); border-radius: 999px; font-weight: 700; font-size: 15px; transition: background 0.2s; }
+.fcta__submit:hover { background: var(--yellow-2); }
+
+/* ===== FOOTER ===== */
+.footer { background: var(--heading); color: var(--white); padding: 80px 0 40px; border-top: 1px solid rgba(255, 255, 255, 0.10); }
+.footer__top { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px 0 56px; border-bottom: 1px solid rgba(255, 255, 255, 0.10); margin-bottom: 56px; }
+.footer__brand-name { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(48px, 7vw, 104px); line-height: 1; color: var(--white); letter-spacing: -0.035em; }
+.footer__brand-name .accent { color: var(--yellow); font-weight: 700; }
+.footer__tagline { font-size: 16px; color: rgba(255, 255, 255, 0.6); letter-spacing: 0.04em; }
+.footer__cols { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 48px; margin-bottom: 56px; }
+.footer__col-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.55); margin-bottom: 18px; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer__col a { font-size: 15px; color: rgba(255, 255, 255, 0.85); transition: color 0.2s; }
+.footer__col a:hover { color: var(--yellow); }
+.footer__col p { font-size: 14px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; }
+.footer__bottom { padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, 0.10); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+.footer__bottom a:hover { color: var(--yellow); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 980px) {
+  :root { --pad-x: 22px; --section-pad: 80px; }
+  .nav__menu { display: none; }
+  .nav__burger { display: inline-flex; }
+  .nav__cta { display: none; }
+  .ahero__crumbs { margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+  .ahero__bottom { grid-template-columns: 1fr; gap: 24px; align-items: start; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); padding: 8px; }
+  .stat + .stat::before { display: none; }
+  .stat { border-bottom: 1px solid var(--line); }
+  .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+  .stat:nth-last-child(-n+2) { border-bottom: 0; }
+  .story__head { grid-template-columns: 1fr; gap: 24px; }
+  .values__head { grid-template-columns: 1fr; gap: 24px; }
+  .values__grid { grid-template-columns: 1fr; }
+  .roof__inner { grid-template-columns: 1fr; gap: 48px; }
+  .creds-section__head { grid-template-columns: 1fr; gap: 24px; }
+  .cred { grid-template-columns: 56px 1fr; gap: 16px; }
+  .cred__focus { grid-column: 2; }
+  .cred__type { grid-column: 2; justify-self: start; }
+  .roof__item { grid-template-columns: 48px 1fr; }
+  .roof__item-icon { width: 48px; height: 48px; }
+  .roof__item-badge { grid-column: 2; justify-self: start; margin-top: 4px; }
+  .fcta__inner { grid-template-columns: 1fr; gap: 56px; }
+  .fcta__row { grid-template-columns: 1fr; }
+  .footer__cols { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .story__year-bubble { font-size: 14px; padding: 8px 14px; }
+}
+@media (max-width: 560px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat { border-right: 0 !important; border-bottom: 1px solid var(--line); }
+  .stat:last-child { border-bottom: 0; }
+  .footer__cols { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="index-v2.html#uvod" class="brand" aria-label="Mediato">
+      <img src="images/Mediato_logo.svg" alt="Mediato">
+    </a>
+    <ul class="nav__menu">
+      <li><a href="o-nas.html" class="nav__link is-active">O nás</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button type="button" class="nav__link nav__link--has-dd" aria-haspopup="true" aria-expanded="false">
+          Služby
+          <svg class="nav__chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1.5L6 6.5L11 1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav__dropdown" role="menu">
+          <a href="sluzby/bezpecny-nakup.html" class="dd-card">
+            <span class="dd-card__icon"><img src="images/001-house.svg" alt=""></span>
+            <span class="dd-card__text">
+              <span class="dd-card__title">Bezpečný nákup</span>
+              <span class="dd-card__sub">Pro kupující — technická, právní i cenová asistence.</span>
+            </span>
+          </a>
+          <a href="sluzby/bezpecny-prodej.html" class="dd-card">
+            <span class="dd-card__icon"><img src="images/002-handshake.svg" alt=""></span>
+            <span class="dd-card__text">
+              <span class="dd-card__title">Bezpečný prodej</span>
+              <span class="dd-card__sub">Pro prodávající — bez reklamací po podpisu.</span>
+            </span>
+          </a>
+          <a href="sluzby/realitni-mediator.html" class="dd-card">
+            <span class="dd-card__icon"><img src="images/003-give.svg" alt=""></span>
+            <span class="dd-card__text">
+              <span class="dd-card__title">Realitní mediátor</span>
+              <span class="dd-card__sub">Mimosoudní řešení sporů, rychleji než soud.</span>
+            </span>
+          </a>
+          <a href="sluzby/skryte-vady.html" class="dd-card">
+            <span class="dd-card__icon"><img src="images/003-give.svg" alt=""></span>
+            <span class="dd-card__text">
+              <span class="dd-card__title">Skryté vady</span>
+              <span class="dd-card__sub">Posouzení vady, vyjednání nápravy nebo kompenzace.</span>
+            </span>
+          </a>
+        </div>
+      </li>
+      <li><a href="index-v2.html#proces" class="nav__link">Jak to funguje</a></li>
+      <li><a href="index-v2.html#reference" class="nav__link">Reference</a></li>
+      <li><a href="#kontakt" class="nav__link">Kontakt</a></li>
+    </ul>
+    <a href="#kontakt" class="nav__cta">Konzultace zdarma</a>
+    <button class="nav__burger" aria-label="Otevřít menu">
+      <svg viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 1H18M0 6H18M0 11H18" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="ahero">
+  <div class="container">
+    <div class="ahero__crumbs">
+      <a href="index-v2.html#uvod">↳ Úvod</a>
+      <span class="ahero__crumbs-num">06 — O nás</span>
+    </div>
+
+    <h1 class="ahero__title">Nemovitost <span class="accent">není rohlík.</span></h1>
+
+    <div class="ahero__bottom">
+      <p class="ahero__sub">A taky se tak nekupuje. Mediato vzniklo z osobní zkušenosti — z 20 let praxe, 1200 případů a 200 soudních sporů, které jsem viděl zblízka. Z přesvědčení, že lidem dokážu pomoci dřív, než se z nemovitosti stane dlouhý, drahý a vyčerpávající boj.</p>
+      <div class="ahero__cta">
+        <a href="#pribeh" class="btn btn--primary">Můj osobní příběh</a>
+        <a href="#kontakt" class="btn btn--ghost">Konzultace zdarma</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-section__head">
+      <span class="eyebrow">— Mediato v číslech</span>
+      <h2 class="stats-section__title">Praxe, ne <span class="accent">teorie.</span></h2>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat__num">20<small>+ let</small></div>
+        <div class="stat__label">Praxe v realitách</div>
+        <div class="stat__desc">Od financování přes prodej, vady staveb až k mediaci.</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num"><span class="num-accent">1200</span><small>+ případů</small></div>
+        <div class="stat__label">Řešených od roku 2015</div>
+        <div class="stat__desc">Vady, špatné rekonstrukce, vlhkost, právní komplikace.</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">200<small>+ sporů</small></div>
+        <div class="stat__label">Pozorovaných u soudu</div>
+        <div class="stat__desc">A přesvědčení, že soud je vždy až poslední možnost.</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">4<small>oblasti</small></div>
+        <div class="stat__label">Komplexní pokrytí</div>
+        <div class="stat__desc">Nákup, prodej, mediace, skryté vady — pod jednou střechou.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY (expandable) -->
+<section class="story" id="pribeh">
+  <div class="container">
+    <div class="story__head">
+      <div>
+        <span class="eyebrow eyebrow--green">— Osobní příběh</span>
+        <h2 class="story__title">Jak Mediato <span class="accent">vzniklo.</span></h2>
+      </div>
+      <p class="story__intro-note"><strong>Tento příběh je osobní výpověď Michala Flachse,</strong> zakladatele Mediato. Popisuje, jak vlastní zkušenost s koupí nemovitosti v Kutné Hoře v roce 2009 položila základ celému projektu.</p>
+    </div>
+
+    <!-- Author card — clearly marks this as Michal's personal story -->
+    <div class="story__author">
+      <img class="story__author-photo" src="images/WhatsApp-Image-2026-01-25-at-17.58.16.jpeg" alt="Michal Flachs">
+      <div class="story__author-text">
+        <div class="story__author-badge">Vyprávění zakladatele</div>
+        <div class="story__author-name">Michal Flachs</div>
+        <div class="story__author-role">Zakladatel Mediato.cz</div>
+      </div>
+    </div>
+
+    <div class="story__body">
+      <!-- LEDE — always visible, sets the tone -->
+      <p class="story__lede">V realitním odvětví se pohybuji <strong>více než 20 let.</strong> Nemovitosti jsem vykupoval, prodával i stavěl. Postupně jsem prošel cestou od financování a realitní praxe přes technické vady, oceňování nemovitostí až k mediaci a mimosoudnímu řešení sporů.</p>
+
+      <!-- TEASER — visible by default, hints at fade -->
+      <div class="story__teaser-fade">
+        <div class="story__teaser">
+          <p>Mediato nevzniklo od stolu. Vzniklo z mé vlastní zkušenosti, z praxe a z příběhů lidí, kteří si koupili nemovitost s očekáváním jistoty, ale místo toho začali řešit vady, nejistotu, náklady a spory.</p>
+          <p>Jedním ze zásadních momentů mé cesty byl <strong>dům v Kutné Hoře.</strong> V roce 2009 jsem koupil nemovitost, která na první pohled vypadala jako příležitost. Postupně se ale ukázalo, že její technický stav a související komplikace jsou mnohem vážnější, než se zdálo.</p>
+        </div>
+      </div>
+
+      <!-- TOGGLE -->
+      <button class="story__toggle" type="button" aria-expanded="false" onclick="document.querySelector('.story').classList.toggle('is-expanded'); this.setAttribute('aria-expanded', document.querySelector('.story').classList.contains('is-expanded'));">
+        <span class="story__toggle-label-collapsed">Číst celý příběh</span>
+        <span class="story__toggle-label-expanded">Sbalit příběh</span>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5L7 9L11 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <!-- FULL STORY — hidden by default, shown when expanded -->
+      <div class="story__full">
+
+        <!-- Photo 1: real-estate listing (2009) -->
+        <figure class="story__photo">
+          <span class="story__year-bubble">2009</span>
+          <img src="images/story/2009-inzerat.jpeg" alt="Původní inzerát domu v Kutné Hoře z roku 2009">
+          <figcaption class="story__photo-caption"><strong>Původní inzerát domu.</strong> RD 3+1, 65,8 m² v ulici V Mišpulkách. Kupní cena nakonec 1,9 milionu Kč.</figcaption>
+        </figure>
+
+        <p>Nemovitost nakonec šla úplně k zemi. <strong>Stavební povolení jsem získal až v roce 2015</strong> — a teprve tehdy začala nová výstavba našeho domu.</p>
+
+        <!-- Photo 2: house front view (2009) -->
+        <figure class="story__photo">
+          <span class="story__year-bubble">2009</span>
+          <img src="images/story/2009-dum-zepredu.jpeg" alt="Pohled na dům v Kutné Hoře v původním stavu">
+          <figcaption class="story__photo-caption"><strong>Dům před rekonstrukcí.</strong> Na první pohled obyvatelný. Při bližším pohledu zcela jiný příběh.</figcaption>
+        </figure>
+
+        <!-- Photo 3: house side view (2009) -->
+        <figure class="story__photo">
+          <span class="story__year-bubble">2009</span>
+          <img src="images/story/2009-dum-zboku.jpeg" alt="Dům v Kutné Hoře z boku, viditelný štít a šikmá střecha">
+          <figcaption class="story__photo-caption"><strong>Z boku byly vidět detaily,</strong> které z fasády nebyly patrné. Statika a krov vyžadovaly mnohem víc, než se původně čekalo.</figcaption>
+        </figure>
+
+        <p>Právě tehdy jsem naplno pochopil, že u nemovitostí nestačí vidět jen cenu, lokalitu a fotky. Je potřeba rozumět <strong>technickému stavu, právním souvislostem, hodnotě, rizikům i lidským očekáváním.</strong></p>
+
+        <p>Od roku 2015 se proto intenzivně věnuji prevenci rizik při nákupu nemovitostí, reklamacím, skrytým vadám a sporům kolem nemovitostí. Zažil jsem více než <strong>1000 případů,</strong> ve kterých lidé řešili vady, špatné rekonstrukce, vlhkost, právní komplikace nebo nenaplněná očekávání.</p>
+
+        <!-- Photo 4: building permit (2015) -->
+        <figure class="story__photo">
+          <span class="story__year-bubble">2015</span>
+          <img src="images/story/2015-stavba-povolena.jpeg" alt="Razítko Stavba povolena, Stavební úřad Kutná Hora, 1. 6. 2015">
+          <figcaption class="story__photo-caption"><strong>Stavební povolení, 1. 6. 2015.</strong> Šest let po koupi. Začátek nové výstavby.</figcaption>
+        </figure>
+
+        <p>Viděl jsem také více než <strong>200 soudních sporů.</strong> A právě tam jsem si uvědomil, že soud je často až poslední možnost. Bere čas, peníze, energii a často i klid. Mnoha problémům se přitom dalo předejít včasným rozpoznáním rizik, lepší komunikací a správným odborným vedením.</p>
+
+        <!-- Photo 5: empty lot (2020) -->
+        <figure class="story__photo">
+          <span class="story__year-bubble">2020</span>
+          <img src="images/story/2009-pozemek-pred.jpeg" alt="Pozemek po demolici, příprava na novou výstavbu">
+          <figcaption class="story__photo-caption"><strong>Pozemek po demolici.</strong> Cesta od původní nemovitosti k novému domu trvala roky.</figcaption>
+        </figure>
+
+        <p>Od roku 2022, kdy jsem začal působit jako mluvčí <strong>Asociace inspektorů nemovitostí,</strong> jsem si stále víc uvědomoval, že nechci být jen člověk, který odborníky propojuje. Chtěl jsem sám rozumět tomu, co se v realitním sporu skutečně děje. Technicky, právně, hodnotově i lidsky.</p>
+
+        <p>Proto jsem svou další cestu postavil na vzdělávání. Zaměřil jsem se na vady a poruchy staveb, oceňování nemovitostí, realitní právo, komunikaci, mediaci a práci s konfliktem. <strong>Praxe mi dala příběhy. Vzdělání mi dalo systém. Mediace mi dala způsob, jak hledat řešení bez zbytečné války.</strong></p>
+
+        <p>Mediato dnes stojí na schopnosti vidět realitní problém z více perspektiv — s odborností, odstupem a nadhledem, který se ve sporu často ztrácí.</p>
+
+        <blockquote class="story__quote">
+          „Mně stačí, že sis tím prošel ty. Já už to zažít nemusím."
+          <span class="story__quote-attr">— Můj kamarád</span>
+        </blockquote>
+
+        <p>A přesně v tom vidím smysl své práce. Pomáhat lidem využít zkušenosti, které už někdo prožil. Předcházet chybám. Včas rozpoznat rizika. Pochopit problém. Přizvat správné odborníky. A pokud už spor vznikl, hledat cestu k řešení dřív, než se z nemovitosti stane dlouhý, drahý a vyčerpávající boj.</p>
+
+        <div class="story__signature">
+          <div class="story__signature-name">Michal Flachs</div>
+          <div class="story__signature-role">Zakladatel Mediato.cz. Pomáhám lidem předcházet realitním sporům a řešit je odborně, věcně a pokud možno mimosoudně.</div>
+          <p class="story__linkedin">Podrobnější přehled mé profesní cesty, vzdělání, licencí a odborných aktivit najdete na <a href="https://www.linkedin.com/in/michal-flachs-58b542356/" target="_blank" rel="noopener">mém LinkedIn profilu →</a></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="container">
+    <div class="values__head">
+      <div>
+        <span class="eyebrow">— Na čem stojíme</span>
+        <h2 class="values__title">Tři principy <span class="accent">Mediata.</span></h2>
+      </div>
+      <p class="lead">Mediato dnes stojí na schopnosti vidět realitní problém z více perspektiv — s odborností, odstupem a nadhledem, který se ve sporu často ztrácí.</p>
+    </div>
+
+    <div class="values__grid">
+      <div class="value-card">
+        <div class="value-card__num">01</div>
+        <h3 class="value-card__title"><span class="accent">Nezávislost</span></h3>
+        <p class="value-card__desc">Nepracujeme za provizi z prodeje. Vystupujeme výhradně na straně klienta — ne makléře, ne developera, ne protistrany.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-card__num">02</div>
+        <h3 class="value-card__title"><span class="accent">Komplexnost</span></h3>
+        <p class="value-card__desc">Technika, právo a vyjednávání pod jednou střechou. Klient nemusí běhat mezi inspektorem, advokátem a odhadcem.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-card__num">03</div>
+        <h3 class="value-card__title"><span class="accent">Klid</span></h3>
+        <p class="value-card__desc">Cílem je dohoda, ne vítězství. Soud bereme jako pojistku, ne výchozí scénář — a klient to pocítí v každém kroku.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UNDER ONE ROOF -->
+<section class="roof">
+  <div class="container">
+    <div class="roof__inner">
+      <div>
+        <span class="eyebrow eyebrow--green">— Pod jednou střechou</span>
+        <h2 class="roof__title">Vše na <span class="accent">jednom místě.</span></h2>
+        <p class="roof__lede">Klient nepotřebuje běhat mezi inspektorem, odhadcem a advokátem. Co dokážeme zajistit přímo, řešíme my. Co je třeba předat dál, předáváme prověřeným spolupracovníkům.</p>
+      </div>
+
+      <div class="roof__list">
+        <div class="roof__item">
+          <div class="roof__item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11L12 3L21 11V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V11Z"/><path d="M9 21V14H15V21" stroke-linecap="round"/></svg>
+          </div>
+          <div class="roof__item-text">
+            <div class="roof__item-title">Vlastní techničtí inspektoři</div>
+            <div class="roof__item-desc">Posuzování staveb, identifikace skrytých vad, písemná stanoviska.</div>
+          </div>
+          <div class="roof__item-badge">In-house</div>
+        </div>
+
+        <div class="roof__item">
+          <div class="roof__item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4H20V20H4V4Z"/><path d="M8 11H16M8 15H13" stroke-linecap="round"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/></svg>
+          </div>
+          <div class="roof__item-text">
+            <div class="roof__item-title">Vlastní odhadci nemovitého majetku</div>
+            <div class="roof__item-desc">Tržní ocenění, podklady pro vyjednávání i obhajobu ceny.</div>
+          </div>
+          <div class="roof__item-badge">In-house</div>
+        </div>
+
+        <div class="roof__item">
+          <div class="roof__item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="9" r="3"/><path d="M3 19C3 16 5 14 9 14M21 19C21 16 19 14 17 14"/><path d="M11 18H15" stroke-linecap="round"/></svg>
+          </div>
+          <div class="roof__item-text">
+            <div class="roof__item-title">Zkušení mediátoři</div>
+            <div class="roof__item-desc">Vedení mimosoudních jednání, příprava a sepsání dohod.</div>
+          </div>
+          <div class="roof__item-badge">In-house</div>
+        </div>
+
+        <div class="roof__item">
+          <div class="roof__item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4H18V20L12 17L6 20V4Z"/><path d="M9 9H15M9 12H13" stroke-linecap="round"/></svg>
+          </div>
+          <div class="roof__item-text">
+            <div class="roof__item-title">Spolupracující advokáti</div>
+            <div class="roof__item-desc">Právní kontrola smluv, úschovy, katastr a soudní zastoupení.</div>
+          </div>
+          <div class="roof__item-badge">Síť</div>
+        </div>
+
+        <div class="roof__item">
+          <div class="roof__item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L15 8L21 9L17 14L18 21L12 17L6 21L7 14L3 9L9 8L12 2Z" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="roof__item-text">
+            <div class="roof__item-title">Soudní znalci</div>
+            <div class="roof__item-desc">Pro případy, kdy expertní stanovisko nestačí a je třeba znalecký posudek pro soud.</div>
+          </div>
+          <div class="roof__item-badge">Síť</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="creds-section">
+  <div class="container">
+    <div class="creds-section__head">
+      <div>
+        <span class="eyebrow">— Vzdělání a praxe</span>
+        <h2 class="creds-section__title">Vybraná <span class="accent">průprava.</span></h2>
+      </div>
+      <p class="lead">Právo, mediace, technické inspekce a znalecká činnost. Vše doložené, vše použitelné v praxi.</p>
+    </div>
+
+    <div class="cred-list">
+
+      <div class="cred">
+        <div class="cred__logo"><img src="images/newton_university_logo.jpeg" alt=""></div>
+        <div>
+          <div class="cred__name">NEWTON University</div>
+          <div class="cred__role">Master of Laws (LL.M.), Právo v realitní praxi</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Skryté vady nemovitostí a mimosoudní řešení sporů.</div>
+        <div class="cred__type">LL.M.</div>
+      </div>
+
+      <div class="cred">
+        <div class="cred__logo"><img src="images/1666604522885.jpeg" alt=""></div>
+        <div>
+          <div class="cred__name">Panevropská univerzita</div>
+          <div class="cred__role">Master of Business Administration (MBA), Reality</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Vady a poruchy staveb v realitní praxi.</div>
+        <div class="cred__type">MBA</div>
+      </div>
+
+      <div class="cred">
+        <div class="cred__logo"><img src="images/fvesuh_logo.jpeg" alt=""></div>
+        <div>
+          <div class="cred__name">Jagiellońská vysoká škola</div>
+          <div class="cred__role">Doctor of Business Administration (DBA)</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Od skryté vady k dohodě — realitní mediace v praxi.</div>
+        <div class="cred__type">DBA</div>
+      </div>
+
+      <div class="cred">
+        <div class="cred__logo"><img src="images/295247076_103055235837664_7352008043089972692_n.jpg" alt=""></div>
+        <div>
+          <div class="cred__name">Asociace inspektorů nemovitostí</div>
+          <div class="cred__role">Tiskový mluvčí asociace a certifikovaný inspektor</div>
+        </div>
+        <div class="cred__focus"><strong>Od roku 2022.</strong> Specializace na skryté vady a komunikaci s veřejností.</div>
+        <div class="cred__type">Mluvčí</div>
+      </div>
+
+      <div class="cred">
+        <div class="cred__logo"><img src="images/dekprojekt_sro_logo.jpeg" alt=""></div>
+        <div>
+          <div class="cred__name">DEK projekt</div>
+          <div class="cred__role">Oblastní zástupce znalecké kanceláře DEKPROJEKT</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Problematika SVJ, vady a poruchy staveb.</div>
+        <div class="cred__type">Praxe</div>
+      </div>
+
+      <div class="cred">
+        <div class="cred__logo"><img src="images/logo-2.jpg" alt=""></div>
+        <div>
+          <div class="cred__name">Asociace mediátorů ČR</div>
+          <div class="cred__role">Certifikovaný mediátor</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Realitní mediace a mimosoudní řešení sporů.</div>
+        <div class="cred__type">Certifikace</div>
+      </div>
+
+      <div class="cred">
+        <div class="cred__logo"><img src="images/images-1.png" alt=""></div>
+        <div>
+          <div class="cred__name">Česká komora odhadců majetku</div>
+          <div class="cred__role">Profesní sdružení znalců a odhadců, z.s.</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Člen a odhadce nemovitého majetku.</div>
+        <div class="cred__type">Členství</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA BAR -->
+<section class="mediabar">
+  <div class="container">
+    <div class="mediabar__head">
+      <span class="eyebrow">— V médiích</span>
+      <h2 class="mediabar__title">Můžete nás <span style="color:var(--yellow-2);font-weight:700;">znát.</span></h2>
+    </div>
+    <div class="mediabar__logos">
+      <img class="mediabar__logo" src="images/TV_Nova_logo_2004.png" alt="TV Nova">
+      <img class="mediabar__logo" src="images/Česka_televize_flat_logo.svg.png" alt="Česká televize">
+      <img class="mediabar__logo" src="images/cerne_ovce_logo.png" alt="Černé ovce">
+      <img class="mediabar__logo" src="images/seznam-bba51bd958107c959526a0847b3ee2c0.png" alt="Seznam">
+      <img class="mediabar__logo" src="images/jz9wr-1706602911_RealitakRoku-logo.png" alt="Realiták roku">
+      <img class="mediabar__logo" src="images/Vrstva-1.png" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="fcta" id="kontakt">
+  <div class="container">
+    <div class="fcta__inner">
+      <div>
+        <span class="eyebrow eyebrow--light">— Začněme</span>
+        <h2 class="fcta__title">Pojďme se <span class="accent">poznat.</span></h2>
+        <p class="fcta__sub">První konzultace je zdarma a k ničemu nezavazuje. Zavoláme si 20 minut a řekneme vám rovnou, jak vám můžeme pomoci.</p>
+
+        <ul class="fcta__channels">
+          <li class="fcta__ch">
+            <span class="fcta__ch-label">Telefon</span>
+            <a href="tel:+420606101121" class="fcta__ch-value">+420 606 101 121</a>
+          </li>
+          <li class="fcta__ch">
+            <span class="fcta__ch-label">E-mail</span>
+            <a href="mailto:info@mediato.cz" class="fcta__ch-value">info@mediato.cz</a>
+          </li>
+          <li class="fcta__ch">
+            <span class="fcta__ch-label">Sídlo</span>
+            <span class="fcta__ch-value">Tiskařská 257/10, Praha 10</span>
+          </li>
+          <li class="fcta__ch">
+            <span class="fcta__ch-label">LinkedIn</span>
+            <a href="https://www.linkedin.com/in/michal-flachs-58b542356/" target="_blank" rel="noopener" class="fcta__ch-value">/in/michal-flachs</a>
+          </li>
+        </ul>
+      </div>
+
+      <form class="fcta__form" onsubmit="event.preventDefault(); alert('Děkujeme, ozveme se do 24 hodin.');">
+        <div class="fcta__form-title">Objednejte si konzultaci</div>
+        <div class="fcta__form-sub">Vyplňte krátký formulář — ozveme se do 24 hodin.</div>
+        <div class="fcta__row">
+          <div class="fcta__field"><label for="f-name">Jméno</label><input id="f-name" type="text" placeholder="Vaše jméno" required></div>
+          <div class="fcta__field"><label for="f-phone">Telefon / e-mail</label><input id="f-phone" type="text" placeholder="+420 nebo @" required></div>
+        </div>
+        <div class="fcta__row">
+          <div class="fcta__field fcta__field--full"><label for="f-msg">Krátký popis situace (volitelné)</label><textarea id="f-msg" placeholder="Co se děje? Jaký je váš cíl?"></textarea></div>
+        </div>
+        <button type="submit" class="fcta__submit">Odeslat a objednat konzultaci →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand-name">media<span class="accent">to</span></div>
+      <div class="footer__tagline">Lépe. Lidsky. Smírně.</div>
+    </div>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <div class="footer__col-title">Provozovatel</div>
+        <p>Mediato CZ s.r.o.<br>Tiskařská 257/10<br>108 00 Praha 10 — Malešice</p>
+        <p style="margin-top:14px;">IČO: 04917251 · DIČ: CZ04917251<br>OR: C 255588, Městský soud v Praze</p>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Služby</div>
+        <ul>
+          <li><a href="sluzby/bezpecny-nakup.html">Bezpečný nákup</a></li>
+          <li><a href="sluzby/bezpecny-prodej.html">Bezpečný prodej</a></li>
+          <li><a href="sluzby/realitni-mediator.html">Realitní mediátor</a></li>
+          <li><a href="sluzby/skryte-vady.html">Skryté vady</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Mediato</div>
+        <ul>
+          <li><a href="o-nas.html">O nás</a></li>
+          <li><a href="index-v2.html#proces">Jak to funguje</a></li>
+          <li><a href="index-v2.html#reference">Reference</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Kontakt</div>
+        <ul>
+          <li><a href="tel:+420606101121">+420 606 101 121</a></li>
+          <li><a href="mailto:info@mediato.cz">info@mediato.cz</a></li>
+          <li><a href="https://www.linkedin.com/in/michal-flachs-58b542356/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Mediato CZ s.r.o. · Všechna práva vyhrazena.</span>
+      <span><a href="zasady-ochrany-osobnich-udaju.html">Zásady ochrany osobních údajů</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll state
+var nav = document.getElementById('nav');
+window.addEventListener('scroll', function(){ if (window.scrollY > 40) nav.classList.add('is-scrolled'); else nav.classList.remove('is-scrolled'); });
+
+// Mobile dropdown toggle (touch)
+document.querySelectorAll('.nav__link--has-dd').forEach(function(btn){
+  btn.addEventListener('click', function(e){
+    var item = btn.closest('.nav__item--dropdown');
+    if (window.matchMedia('(hover: none)').matches) {
+      e.preventDefault();
+      item.classList.toggle('is-open');
+    }
+  });
+});
+
+// Smooth scroll when opening the story from a link
+document.querySelectorAll('a[href="#pribeh"]').forEach(function(a){
+  a.addEventListener('click', function(){
+    // Auto-expand the story when navigating to it
+    setTimeout(function(){
+      var s = document.querySelector('.story');
+      if (s && !s.classList.contains('is-expanded')) {
+        s.classList.add('is-expanded');
+        var btn = s.querySelector('.story__toggle');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+      }
+    }, 400);
+  });
+});
+</script>
+
+</body>
+</html>

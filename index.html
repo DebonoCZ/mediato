@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mediato — Prevence a řešení realitních sporů na klíč</title>
+<meta name="description" content="Nezávislá realitní mediace, technická a právní asistence při koupi a prodeji nemovitosti. Bez soudu, bez stresu. Vede Michal Flachs, certifikovaný mediátor a inspektor nemovitostí.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   MEDIATO v2 — Original brand identity (Satoshi, #5edd79, #1c1e4f)
+   Inspiration from bytydrobovice = ONLY large typography scale,
+   section rhythm, generous whitespace.
+   ============================================================ */
+
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Light.otf') format('opentype');   font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Medium.otf') format('opentype');  font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Bold.otf') format('opentype');    font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: Satoshi; src: url('fonts/Satoshi-Black.otf') format('opentype');   font-weight: 900; font-style: normal; font-display: swap; }
+
+:root {
+  --yellow:    #5edd79;
+  --yellow-2:  #4ac766;
+  --yellow-bg: #def8e5;
+  --heading:   #1c1e4f;
+  --heading-2: #2a2d6e;
+  --body:      #545686;
+  --purple:    #4e3bf0;
+  --white:     #ffffff;
+  --off-white: #f7f7f9;
+  --line:      rgba(28, 30, 79, 0.10);
+  --line-strong: rgba(28, 30, 79, 0.20);
+  --line-light: rgba(255, 255, 255, 0.16);
+  --container:    1320px;
+  --pad-x:        40px;
+  --section-pad:  140px;
+  --radius:       16px;
+  --radius-lg:    24px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+body { font-family: Satoshi, Ubuntu, system-ui, sans-serif; font-size: 17px; line-height: 1.55; color: var(--body); background: var(--white); }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--heading);
+}
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; opacity: 0.5; }
+.eyebrow--green { color: var(--yellow-2); }
+.eyebrow--light { color: rgba(255, 255, 255, 0.7); }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad-x); width: 100%; }
+
+.lead { font-size: clamp(18px, 1.3vw, 22px); line-height: 1.45; color: var(--body); max-width: 56ch; font-weight: 400; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 18px 30px;
+  font-family: Satoshi, sans-serif; font-weight: 700; font-size: 15px;
+  border-radius: 999px; letter-spacing: -0.005em;
+  transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.btn::after { content: "→"; font-size: 18px; transition: transform 0.25s; }
+.btn:hover::after { transform: translateX(4px); }
+.btn--primary { background: var(--yellow); color: var(--heading); }
+.btn--primary:hover { background: var(--yellow-2); }
+.btn--dark { background: var(--heading); color: var(--white); }
+.btn--dark:hover { background: var(--heading-2); }
+.btn--ghost { background: transparent; color: var(--heading); border: 1.5px solid var(--line-strong); padding: 16.5px 28.5px; }
+.btn--ghost:hover { background: var(--heading); color: var(--white); border-color: var(--heading); }
+.btn--ghost-light { background: transparent; color: var(--white); border: 1.5px solid var(--line-light); padding: 16.5px 28.5px; }
+.btn--ghost-light:hover { background: var(--yellow); color: var(--heading); border-color: var(--yellow); }
+
+/* ===== NAV ===== */
+.nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid transparent; transition: background 0.3s, border-color 0.3s; }
+.nav.is-scrolled { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom-color: var(--line); }
+.nav__inner { display: flex; align-items: center; justify-content: space-between; padding: 16px var(--pad-x); max-width: var(--container); margin: 0 auto; gap: 32px; }
+.brand { display: inline-flex; align-items: center; }
+.brand img { height: 38px; width: auto; }
+.nav__menu { display: flex; align-items: center; gap: 40px; list-style: none; }
+.nav__link { font-size: 15px; font-weight: 500; color: var(--heading); padding: 6px 0; transition: color 0.2s; }
+.nav__link:hover { color: var(--yellow-2); }
+.nav__cta { background: var(--yellow); color: var(--heading); font-size: 14px; font-weight: 700; padding: 12px 22px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.2s; }
+.nav__cta::after { content: "→"; font-size: 16px; }
+.nav__cta:hover { background: var(--yellow-2); transform: translateY(-1px); }
+.nav__burger { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; border: 1px solid var(--line-strong); border-radius: 999px; }
+.nav__burger svg { width: 18px; height: 18px; color: var(--heading); }
+
+/* Dropdown */
+.nav__link--has-dd { display: inline-flex; align-items: center; gap: 6px; }
+.nav__link--has-dd.is-active { color: var(--yellow-2); }
+.nav__chevron { width: 10px; height: 7px; transition: transform 0.25s; }
+.nav__item--dropdown { position: relative; }
+.nav__item--dropdown:hover .nav__chevron,
+.nav__item--dropdown.is-open .nav__chevron { transform: rotate(180deg); }
+
+.nav__dropdown {
+  position: absolute;
+  top: calc(100% + 16px); left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  width: 380px; background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 30px 80px -20px rgba(28, 30, 79, 0.20), 0 8px 24px -8px rgba(28, 30, 79, 0.10);
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr; gap: 4px;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.2s, transform 0.25s, visibility 0.2s;
+  z-index: 200;
+}
+.nav__dropdown::before { content: ""; position: absolute; top: -8px; left: 0; right: 0; height: 24px; }
+.nav__item--dropdown:hover .nav__dropdown,
+.nav__item--dropdown:focus-within .nav__dropdown,
+.nav__item--dropdown.is-open .nav__dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+.dd-card { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-radius: 14px; transition: background 0.2s; }
+.dd-card:hover, .dd-card:focus { background: var(--yellow-bg); }
+.dd-card.is-active { background: var(--yellow-bg); }
+.dd-card__icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: var(--yellow-bg); display: grid; place-items: center; transition: background 0.2s; }
+.dd-card:hover .dd-card__icon, .dd-card.is-active .dd-card__icon { background: var(--white); box-shadow: 0 0 0 1.5px var(--yellow-2); }
+.dd-card__icon img { width: 22px; height: 22px; }
+.dd-card__text { display: flex; flex-direction: column; gap: 2px; }
+.dd-card__title { font-family: Satoshi, sans-serif; font-size: 15px; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+.dd-card__sub { font-size: 12px; color: var(--body); line-height: 1.4; }
+
+/* ===== HERO — 2 columns: content left, vertical video right ===== */
+.hero {
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - 72px);
+  min-height: calc(100dvh - 72px);
+  padding: 32px 0 48px;
+  display: flex;
+  flex-direction: column;
+}
+.hero__crumbs { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: var(--body); margin-bottom: 32px; text-transform: uppercase; flex-shrink: 0; }
+.hero__crumbs-num { font-variant-numeric: tabular-nums; opacity: 0.6; }
+
+.hero .container { flex: 1; display: flex; flex-direction: column; }
+.hero__grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 80px; align-items: stretch; flex: 1; min-height: 0; }
+.hero__left { display: flex; flex-direction: column; min-height: 0; }
+
+.hero__title {
+  font-family: Satoshi, sans-serif; font-weight: 300;
+  font-size: clamp(44px, 6vw, 100px);
+  line-height: 0.96; letter-spacing: -0.03em; color: var(--heading); max-width: 13ch;
+}
+.hero__title .accent { color: var(--yellow-2); font-weight: 700; }
+
+.hero__sub { margin-top: 28px; font-size: clamp(16px, 1.2vw, 19px); line-height: 1.5; color: var(--body); max-width: 48ch; font-weight: 400; }
+.hero__cta-group { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+.hero__meta { margin-top: auto; padding-top: 32px; }
+.hero__recenze { display: flex; align-items: center; gap: 18px; padding-top: 28px; border-top: 1px solid var(--line); }
+.hero__recenze-photos { display: flex; }
+.hero__recenze-photos img { width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--white); margin-left: -12px; object-fit: cover; }
+.hero__recenze-photos img:first-child { margin-left: 0; }
+.hero__recenze-meta { display: flex; flex-direction: column; gap: 2px; }
+.hero__stars { display: flex; gap: 2px; }
+.hero__stars svg { width: 15px; height: 15px; color: var(--yellow); fill: currentColor; }
+.hero__recenze-text { font-size: 14px; color: var(--heading); }
+.hero__recenze-text strong { font-weight: 700; }
+
+/* RIGHT side — vertical video placeholder, stretches to column height */
+.hero__right { display: flex; min-height: 0; }
+.hero__video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--heading);
+  display: block;
+  border: 0;
+  padding: 0;
+  isolation: isolate;
+}
+.hero__video-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 25%;
+  transition: transform 0.6s ease, filter 0.4s ease;
+  z-index: 1;
+}
+.hero__video::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(28,30,79,0.10) 0%, rgba(28,30,79,0.35) 60%, rgba(28,30,79,0.65) 100%);
+  z-index: 2;
+  transition: background 0.3s;
+}
+.hero__video:hover .hero__video-poster { transform: scale(1.03); filter: brightness(1.05); }
+.hero__video:hover::before { background: linear-gradient(180deg, rgba(28,30,79,0.05) 0%, rgba(28,30,79,0.25) 60%, rgba(28,30,79,0.55) 100%); }
+.hero__video-play {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(96px, 11vw, 140px);
+  height: clamp(96px, 11vw, 140px);
+  border-radius: 50%;
+  background: var(--yellow);
+  display: grid;
+  place-items: center;
+  z-index: 3;
+  box-shadow: 0 20px 60px -10px rgba(28, 30, 79, 0.45), 0 0 0 0 rgba(94, 221, 121, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
+  animation: heroPlayPulse 2.4s ease-out infinite;
+}
+.hero__video:hover .hero__video-play { transform: translate(-50%, -50%) scale(1.06); background: var(--yellow-2); }
+.hero__video-play svg { width: clamp(28px, 3vw, 38px); height: clamp(28px, 3vw, 38px); color: var(--heading); margin-left: 5%; }
+
+@keyframes heroPlayPulse {
+  0%   { box-shadow: 0 20px 60px -10px rgba(28, 30, 79, 0.45), 0 0 0 0    rgba(94, 221, 121, 0.55); }
+  70%  { box-shadow: 0 20px 60px -10px rgba(28, 30, 79, 0.45), 0 0 0 22px rgba(94, 221, 121, 0); }
+  100% { box-shadow: 0 20px 60px -10px rgba(28, 30, 79, 0.45), 0 0 0 0    rgba(94, 221, 121, 0); }
+}
+
+.hero__video-caption {
+  position: absolute;
+  left: 24px; right: 24px; bottom: 24px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.hero__video-caption-left { display: inline-flex; align-items: center; gap: 10px; }
+.hero__video-caption-left::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); }
+.hero__video-caption-right { opacity: 0.7; font-size: 11px; }
+
+/* ===== MEDIA STRIP — "Můžete nás znát z médií" ===== */
+.media-strip { background: var(--white); padding: 80px 0 40px; border-top: 1px solid var(--line); }
+.media-strip__label { display: block; text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--body); margin-bottom: 36px; }
+.media-strip__row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 48px;
+  align-items: center;
+  justify-items: center;
+}
+.media-strip__logo {
+  max-width: 100%;
+  max-height: 44px;
+  width: auto;
+  height: auto;
+  opacity: 0.7;
+  filter: grayscale(0%);
+  transition: opacity 0.25s, transform 0.25s;
+}
+.media-strip__logo:hover { opacity: 1; transform: translateY(-2px); }
+@media (max-width: 980px) {
+  .media-strip { padding: 56px 0 24px; }
+  .media-strip__row { grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+  .media-strip__logo { max-height: 36px; }
+}
+
+/* ===== SERVICES ===== */
+.services { background: var(--yellow-bg); padding: var(--section-pad) 0; }
+.services__head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 80px; }
+.services__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(44px, 7vw, 120px); line-height: 0.95; letter-spacing: -0.03em; color: var(--heading); max-width: 12ch; }
+.services__title .accent { color: var(--yellow-2); font-weight: 400; }
+.services__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(28, 30, 79, 0.10); border-radius: var(--radius-lg); overflow: hidden; }
+.service { background: var(--yellow-bg); padding: 48px 40px 44px; display: flex; flex-direction: column; gap: 16px; position: relative; transition: background 0.3s; min-height: 280px; }
+.service:hover { background: #cbf0d6; }
+.service::after { content: "→"; position: absolute; right: 36px; top: 50px; font-size: 22px; color: var(--heading); transition: transform 0.3s; }
+.service:hover::after { transform: translate(4px, -4px); }
+.service__icon { width: 56px; height: 56px; margin-bottom: 8px; }
+.service__title { font-family: Satoshi, sans-serif; font-size: clamp(26px, 2.2vw, 34px); font-weight: 700; letter-spacing: -0.015em; color: var(--heading); line-height: 1.1; }
+.service__title .accent { color: var(--yellow-2); font-weight: 400; }
+.service__desc { color: var(--body); font-size: 16px; line-height: 1.55; max-width: 46ch; margin-top: 4px; }
+
+/* ===== STATS ===== */
+.stats { background: var(--white); padding: var(--section-pad) 0; }
+.stats__head { margin-bottom: 72px; max-width: 80ch; }
+.stats__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5vw, 80px); line-height: 1; letter-spacing: -0.025em; color: var(--heading); margin: 20px 0 24px; max-width: 22ch; }
+.stats__title .accent { color: var(--yellow-2); font-weight: 400; }
+.stats__grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
+.stat { padding: 48px 32px; border-right: 1px solid var(--line); }
+.stat:last-child { border-right: 0; }
+.stat__num { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(56px, 5.5vw, 88px); line-height: 0.95; letter-spacing: -0.03em; color: var(--heading); display: flex; align-items: baseline; gap: 8px; white-space: nowrap; flex-wrap: nowrap; }
+.stat__num-value { font-variant-numeric: tabular-nums; }
+.stat__num small { font-size: 0.28em; font-weight: 700; color: var(--body); letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; }
+.stat__label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--heading); margin: 24px 0 8px; }
+.stat__desc { font-size: 14px; color: var(--body); line-height: 1.5; }
+
+/* ===== ABOUT MICHAL ===== */
+.about { background: var(--white); padding: var(--section-pad) 0; }
+.about__inner { display: grid; grid-template-columns: 1.1fr 1fr; gap: 96px; align-items: start; }
+.about__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(44px, 6vw, 100px); line-height: 0.96; letter-spacing: -0.03em; color: var(--heading); margin: 24px 0 32px; }
+.about__title .accent { color: var(--yellow-2); font-weight: 400; }
+.about__body p { font-size: 18px; line-height: 1.6; color: var(--body); margin-bottom: 18px; max-width: 54ch; }
+.about__body strong { color: var(--heading); font-weight: 700; }
+.about__cta { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+.about__visual { position: relative; }
+.about__photo { width: 100%; border-radius: var(--radius-lg); display: block; aspect-ratio: 4 / 5; object-fit: cover; }
+.about__widget { position: absolute; right: -24px; bottom: -24px; background: var(--yellow); border-radius: var(--radius-lg); padding: 22px 28px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; box-shadow: 0 20px 50px -10px rgba(28, 30, 79, 0.25); }
+.about__widget-num { font-family: Satoshi, sans-serif; font-size: 72px; font-weight: 700; color: var(--heading); line-height: 0.9; letter-spacing: -0.03em; }
+.about__widget-label { font-size: 13px; color: var(--heading); font-weight: 500; line-height: 1.35; max-width: 20ch; }
+.about__widget-label strong { font-weight: 700; }
+
+/* ===== EXPERTS GROUP — "Vše pod jednou střechou" ===== */
+.experts { background: var(--white); padding: var(--section-pad) 0; }
+.experts__inner { display: grid; grid-template-columns: 1.05fr 1fr; gap: 96px; align-items: center; }
+.experts__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(44px, 6vw, 100px); line-height: 0.96; letter-spacing: -0.03em; color: var(--heading); margin: 24px 0 32px; }
+.experts__title .accent { color: var(--yellow-2); font-weight: 400; }
+.experts__lead { font-size: 18px; line-height: 1.6; color: var(--body); max-width: 52ch; margin-bottom: 32px; }
+.experts__list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; padding: 0; }
+.experts__item { display: flex; align-items: center; gap: 16px; font-size: 17px; color: var(--heading); font-weight: 500; }
+.experts__check { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--yellow); display: grid; place-items: center; }
+.experts__check svg { width: 12px; height: 12px; color: var(--heading); }
+.experts__cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.experts__visual { display: flex; align-items: center; justify-content: center; }
+.experts__visual svg, .experts__visual img { max-width: 100%; max-height: 560px; height: auto; }
+@media (max-width: 980px) {
+  .experts__inner { grid-template-columns: 1fr; gap: 56px; }
+}
+
+/* ===== CREDS ===== */
+.creds-section { background: var(--off-white); padding: var(--section-pad) 0; }
+.creds-section__head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 80px; }
+.creds-section__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 88px); line-height: 0.95; letter-spacing: -0.03em; color: var(--heading); max-width: 12ch; }
+.creds-section__title .accent { color: var(--yellow-2); font-weight: 400; }
+.cred-list { display: flex; flex-direction: column; border-top: 1px solid var(--line-strong); }
+.cred { display: grid; grid-template-columns: 80px 1.2fr 1.8fr auto; gap: 28px; padding: 32px 0; border-bottom: 1px solid var(--line); align-items: start; transition: padding 0.25s; }
+.cred:hover { padding-left: 12px; }
+.cred > * { align-self: start; }
+.cred__logo { align-self: center; }
+.cred__type { align-self: center; }
+.cred__logo { width: 56px; height: 56px; background: var(--white); border-radius: 12px; display: grid; place-items: center; padding: 6px; box-shadow: 0 0 0 1px var(--line); font-family: Satoshi, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: -0.02em; color: var(--heading); line-height: 1; text-align: center; }
+.cred__logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.cred__logo--accent { background: var(--yellow-bg); color: var(--yellow-2); }
+.cred__logo--dark { background: var(--heading); color: var(--white); }
+.cred__name { font-family: Satoshi, sans-serif; font-size: 18px; font-weight: 700; color: var(--heading); letter-spacing: -0.01em; }
+.cred__role { font-size: 13px; color: var(--body); margin-top: 2px; }
+.cred__focus { font-size: 14px; color: var(--body); line-height: 1.5; max-width: 52ch; }
+.cred__focus strong { color: var(--heading); font-weight: 700; }
+.cred__type { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--heading); background: var(--yellow-bg); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+
+/* ===== REFERENCES ===== */
+.refs { background: var(--white); padding: var(--section-pad) 0; }
+.refs__head { margin-bottom: 72px; max-width: 60ch; }
+.refs__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(44px, 6vw, 100px); line-height: 0.96; letter-spacing: -0.03em; color: var(--heading); margin: 20px 0 0; max-width: 14ch; }
+.refs__title .accent { color: var(--yellow-2); font-weight: 400; }
+.refs__main { margin-bottom: 64px; }
+.refs__main-quote { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(24px, 2.6vw, 38px); line-height: 1.25; color: var(--heading); letter-spacing: -0.015em; max-width: 34ch; margin-bottom: 32px; }
+.refs__main-quote::before { content: "„"; font-size: 1.3em; color: var(--yellow-2); line-height: 0; vertical-align: -0.1em; margin-right: 0.1em; }
+.refs__main-author { display: flex; align-items: center; gap: 18px; padding-top: 28px; border-top: 1px solid var(--line); }
+.refs__main-author img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
+.refs__main-author-name { font-weight: 700; color: var(--heading); }
+.refs__main-author-pos { font-size: 13px; color: var(--body); margin-top: 2px; }
+.refs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.ref-card { background: var(--off-white); border-radius: var(--radius-lg); padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+.ref-card__stars { display: flex; gap: 2px; }
+.ref-card__stars svg { width: 16px; height: 16px; color: var(--yellow-2); fill: currentColor; }
+.ref-card__text { color: var(--heading); font-size: 15px; line-height: 1.55; flex: 1; }
+.ref-card__author { display: flex; align-items: center; gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); }
+.ref-card__author img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.ref-card__author-name { font-size: 14px; font-weight: 700; color: var(--heading); }
+.ref-card__author-pos { font-size: 12px; color: var(--body); margin-top: 2px; }
+
+/* ===== PROCESS ===== */
+.process { background: var(--heading); color: var(--white); padding: var(--section-pad) 0; }
+.process__head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 80px; }
+.process__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(44px, 6vw, 100px); line-height: 0.96; letter-spacing: -0.03em; color: var(--white); max-width: 12ch; }
+.process__title .accent { color: var(--yellow); font-weight: 400; }
+.process__intro { color: rgba(255, 255, 255, 0.7); font-size: 18px; line-height: 1.5; max-width: 44ch; }
+.process__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255, 255, 255, 0.14); border-radius: var(--radius-lg); overflow: hidden; }
+.step { background: var(--heading); padding: 40px 32px; display: flex; flex-direction: column; gap: 12px; min-height: 280px; }
+.step__num { font-family: Satoshi, sans-serif; font-weight: 300; font-size: 72px; color: var(--yellow); line-height: 1; margin-bottom: 16px; }
+.step__title { font-family: Satoshi, sans-serif; font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -0.01em; }
+.step__desc { font-size: 14px; line-height: 1.55; color: rgba(255, 255, 255, 0.7); }
+.process__cta { margin-top: 64px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.process__cta-note { color: rgba(255, 255, 255, 0.55); font-size: 13px; margin-left: 8px; }
+
+/* ===== FAQ ===== */
+.faq { background: var(--off-white); padding: var(--section-pad) 0; }
+.faq__head { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
+.faq__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(44px, 6vw, 100px); line-height: 0.96; letter-spacing: -0.03em; color: var(--heading); max-width: 9ch; }
+.faq__title .accent { color: var(--yellow-2); font-weight: 400; }
+.faq__list { margin-top: -8px; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item:first-child { border-top: 1px solid var(--line); }
+.faq-q { width: 100%; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px 0; font-family: Satoshi, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; color: var(--heading); }
+.faq-q__icon { width: 36px; height: 36px; border-radius: 999px; border: 1.5px solid var(--line-strong); display: grid; place-items: center; flex-shrink: 0; transition: background 0.2s, transform 0.3s, border-color 0.2s; font-weight: 400; font-size: 20px; color: var(--heading); }
+.faq-q__icon::before { content: "+"; transition: transform 0.3s; }
+.faq-item.is-open .faq-q__icon { background: var(--yellow); border-color: var(--yellow); transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.faq-a__inner { padding: 0 56px 32px 0; color: var(--body); font-size: 16px; line-height: 1.65; max-width: 64ch; }
+.faq-item.is-open .faq-a { max-height: 600px; }
+
+/* ===== FINAL CTA ===== */
+.cta-block { background: var(--yellow-bg); padding: var(--section-pad) 0; }
+.cta-block__inner { display: grid; grid-template-columns: 1fr auto; gap: 64px; align-items: end; }
+.cta-block__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(40px, 5.5vw, 84px); line-height: 0.97; letter-spacing: -0.03em; color: var(--heading); max-width: 16ch; }
+.cta-block__title .accent { color: var(--yellow-2); font-weight: 400; }
+.cta-block__sub { margin-top: 24px; font-size: 18px; color: var(--body); max-width: 50ch; line-height: 1.5; }
+.cta-block__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ===== CONTACT ===== */
+.contact { background: var(--heading); color: var(--white); padding: var(--section-pad) 0; }
+.contact__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; }
+.contact__title { font-family: Satoshi, sans-serif; font-weight: 300; font-size: clamp(44px, 6vw, 100px); line-height: 0.96; letter-spacing: -0.03em; color: var(--white); margin: 24px 0 32px; }
+.contact__title .accent { color: var(--yellow); font-weight: 400; }
+.contact__lead { font-size: 18px; line-height: 1.5; color: rgba(255, 255, 255, 0.75); max-width: 46ch; margin-bottom: 48px; }
+.contact__channels { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.contact__channel { display: grid; grid-template-columns: 56px 110px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.15); align-items: center; }
+.contact__channel:last-child { border-bottom: 0; }
+.contact__channel-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); display: grid; place-items: center; color: var(--heading); flex-shrink: 0; transition: background 0.2s, transform 0.2s; }
+.contact__channel-icon svg { width: 22px; height: 22px; }
+.contact__channel:hover .contact__channel-icon { background: var(--yellow-2); transform: translateY(-1px); }
+.contact__channel-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.55); }
+.contact__channel-value { font-family: Satoshi, sans-serif; font-size: clamp(18px, 1.5vw, 22px); font-weight: 500; color: var(--white); letter-spacing: -0.01em; transition: color 0.2s; line-height: 1.3; }
+a.contact__channel-value:hover { color: var(--yellow); }
+.form { background: var(--heading-2); border-radius: var(--radius-lg); padding: 40px; }
+.form__title { font-family: Satoshi, sans-serif; font-size: 28px; font-weight: 700; color: var(--white); margin-bottom: 8px; letter-spacing: -0.015em; }
+.form__sub { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 28px; }
+.form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field--full { grid-column: 1 / -1; }
+.field label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.6); }
+.field input, .field select, .field textarea { background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.25); padding: 12px 0 10px; font-family: Satoshi, sans-serif; font-size: 15px; color: var(--white); font-weight: 500; transition: border-color 0.2s; }
+.field input::placeholder, .field textarea::placeholder { color: rgba(255, 255, 255, 0.35); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 0; border-bottom-color: var(--yellow); }
+.field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='white' stroke-opacity='0.5' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0 center; padding-right: 24px; }
+.field select option { background: var(--heading); color: var(--white); }
+.field textarea { resize: vertical; min-height: 90px; }
+.form__submit { width: 100%; margin-top: 24px; padding: 16px 24px; background: var(--yellow); color: var(--heading); border-radius: 999px; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.2s; }
+.form__submit:hover { background: var(--yellow-2); }
+.form__note { font-size: 12px; color: rgba(255, 255, 255, 0.45); margin-top: 16px; text-align: center; }
+
+/* ===== FOOTER ===== */
+.footer { background: var(--heading); color: var(--white); padding: 80px 0 40px; border-top: 1px solid rgba(255, 255, 255, 0.10); }
+.footer__top { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 24px 0 56px; border-bottom: 1px solid rgba(255, 255, 255, 0.10); margin-bottom: 56px; }
+.footer__logo { height: clamp(72px, 9vw, 120px); width: auto; }
+.footer__tagline { font-size: 16px; color: rgba(255, 255, 255, 0.6); letter-spacing: 0.04em; }
+.footer__cols { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 48px; margin-bottom: 56px; }
+.footer__col-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: rgba(255, 255, 255, 0.55); margin-bottom: 18px; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer__col a { font-size: 15px; color: rgba(255, 255, 255, 0.85); transition: color 0.2s; }
+.footer__col a:hover { color: var(--yellow); }
+.footer__col p { font-size: 14px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; }
+.footer__bottom { padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, 0.10); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+.footer__bottom a:hover { color: var(--yellow); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 980px) {
+  :root { --pad-x: 22px; --section-pad: 88px; }
+  .nav__menu { display: none; }
+  .nav__burger { display: inline-flex; }
+  .nav__cta { display: none; }
+  .hero { padding: 32px 0 64px; min-height: auto; }
+  .hero__crumbs { margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+  .hero__grid { grid-template-columns: 1fr; gap: 40px; flex: none; }
+  .hero__sub { margin-top: 24px; }
+  .hero__cta-group { margin-top: 24px; }
+  .hero__meta { margin-top: 32px; padding-top: 0; }
+  .hero__right { aspect-ratio: 4 / 5; }
+  .hero__video { aspect-ratio: 4 / 5; }
+  .services__head { grid-template-columns: 1fr; gap: 24px; }
+  .services__grid { grid-template-columns: 1fr; }
+  .stats__grid { grid-template-columns: repeat(2, 1fr); }
+  .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+  .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+  .stat:nth-last-child(-n+2) { border-bottom: 0; }
+  .about__inner { grid-template-columns: 1fr; gap: 56px; }
+  .creds-section__head { grid-template-columns: 1fr; gap: 24px; }
+  .cred { grid-template-columns: 56px 1fr; }
+  .cred__focus { grid-column: 2; }
+  .cred__type { grid-column: 2; justify-self: start; }
+  .process__head { grid-template-columns: 1fr; gap: 24px; }
+  .process__steps { grid-template-columns: repeat(2, 1fr); }
+  .step { min-height: 220px; }
+  .refs__grid { grid-template-columns: 1fr; }
+  .faq__head { grid-template-columns: 1fr; gap: 32px; }
+  .cta-block__inner { grid-template-columns: 1fr; gap: 32px; align-items: start; }
+  .contact__inner { grid-template-columns: 1fr; gap: 56px; }
+  .form__row { grid-template-columns: 1fr; }
+  .footer__cols { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 560px) {
+  .stats__grid { grid-template-columns: 1fr; }
+  .stat { border-right: 0 !important; border-bottom: 1px solid var(--line); }
+  .stat:last-child { border-bottom: 0; }
+  .process__steps { grid-template-columns: 1fr; }
+  .footer__cols { grid-template-columns: 1fr; }
+  .about__widget { right: 12px; bottom: -16px; padding: 18px 20px; }
+  .about__widget-num { font-size: 54px; }
+}
+
+/* ===== MOBILE NAV DRAWER ===== */
+@media (max-width: 980px) {
+  .nav { position: sticky; }
+  .nav__inner { flex-wrap: wrap; }
+  .nav__menu {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    order: 99;
+    margin: 0;
+    padding: 16px 0 24px;
+    border-top: 1px solid var(--line);
+    background: var(--white);
+  }
+  .nav.is-mobile-open .nav__menu { display: flex; }
+  .nav.is-mobile-open .nav__menu li { width: 100%; }
+  .nav.is-mobile-open .nav__menu .nav__link { display: block; width: 100%; padding: 14px 0; font-size: 18px; font-weight: 600; border-bottom: 1px solid var(--line); }
+  .nav.is-mobile-open .nav__menu .nav__item--dropdown .nav__dropdown { position: static; transform: none; opacity: 1; visibility: visible; width: 100%; box-shadow: none; border: 0; padding: 0 0 8px 0; background: transparent; margin: 0 0 8px 0; }
+  .nav.is-mobile-open .nav__menu .dd-card { padding: 12px 0; border-radius: 0; }
+  .nav.is-mobile-open .nav__menu .dd-card:hover { background: transparent; }
+  .nav.is-mobile-open .nav__cta { display: inline-flex; margin: 16px 0 0; width: 100%; justify-content: center; }
+  .nav__burger { position: relative; z-index: 110; }
+  .nav.is-mobile-open .nav__burger { background: var(--heading); border-color: var(--heading); }
+  .nav.is-mobile-open .nav__burger svg { color: var(--white); }
+}
+
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mediato — Prevence a řešení realitních sporů na klíč">
+<meta property="og:description" content="Nezávislá realitní mediace, technická a právní asistence při koupi a prodeji nemovitosti. Bez soudu, bez stresu. Vede Michal Flachs, certifikovaný mediátor a inspektor nemovitostí.">
+<meta property="og:image" content="images/Michal_flachs_profil.jpeg">
+<meta property="og:url" content="https://mediato.cz/">
+<meta property="og:locale" content="cs_CZ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mediato — Prevence a řešení realitních sporů na klíč">
+<meta name="twitter:description" content="Nezávislá realitní mediace, technická a právní asistence při koupi a prodeji nemovitosti. Bez soudu, bez stresu. Vede Michal Flachs, certifikovaný mediátor a inspektor nemovitostí.">
+<meta name="twitter:image" content="images/Michal_flachs_profil.jpeg">
+<link rel="canonical" href="https://mediato.cz/">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#uvod" class="brand" aria-label="Mediato">
+      <img src="images/Mediato_logo.svg" alt="Mediato">
+    </a>
+    <ul class="nav__menu">
+      <li><a href="o-nas/index.html" class="nav__link">O nás</a></li>
+      <li class="nav__item nav__item--dropdown">
+        <button type="button" class="nav__link nav__link--has-dd" aria-haspopup="true" aria-expanded="false">
+          Služby
+          <svg class="nav__chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1.5L6 6.5L11 1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav__dropdown" role="menu">
+          <a href="sluzby/bezpecny-nakup/index.html" class="dd-card">
+            <span class="dd-card__icon"><img src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/68833f195871c66e1e3f2815_001-house.svg" alt=""></span>
+            <span class="dd-card__text">
+              <span class="dd-card__title">Bezpečný nákup</span>
+              <span class="dd-card__sub">Pro kupující — technická, právní i cenová asistence.</span>
+            </span>
+          </a>
+          <a href="sluzby/bezpecny-prodej/index.html" class="dd-card">
+            <span class="dd-card__icon"><img src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/68833f5dd1dc385f795baf00_002-handshake.svg" alt=""></span>
+            <span class="dd-card__text">
+              <span class="dd-card__title">Bezpečný prodej</span>
+              <span class="dd-card__sub">Pro prodávající — bez reklamací po podpisu.</span>
+            </span>
+          </a>
+          <a href="sluzby/realitni-mediator/index.html" class="dd-card">
+            <span class="dd-card__icon"><img src="images/services/scales.svg" alt=""></span>
+            <span class="dd-card__text">
+              <span class="dd-card__title">Realitní mediátor</span>
+              <span class="dd-card__sub">Mimosoudní řešení sporů, rychleji než soud.</span>
+            </span>
+          </a>
+          <a href="sluzby/skryte-vady/index.html" class="dd-card">
+            <span class="dd-card__icon"><img src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/68833f68a154bbf641880f69_003-give.svg" alt=""></span>
+            <span class="dd-card__text">
+              <span class="dd-card__title">Skryté vady</span>
+              <span class="dd-card__sub">Posouzení vady, vyjednání nápravy nebo kompenzace.</span>
+            </span>
+          </a>
+        </div>
+      </li>
+      <li><a href="#proces" class="nav__link">Jak to funguje</a></li>
+      <li><a href="#reference" class="nav__link">Reference</a></li>
+      <li><a href="kontakt/index.html" class="nav__link">Kontakt</a></li>
+    </ul>
+    <a href="kontakt/index.html" class="nav__cta">Konzultace zdarma</a>
+    <button class="nav__burger" aria-label="Otevřít menu">
+      <svg viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 1H18M0 6H18M0 11H18" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="uvod">
+  <div class="container">
+    <div class="hero__crumbs">
+      <span>↳ Úvod</span>
+      <span class="hero__crumbs-num">01 — Realitní mediace</span>
+    </div>
+
+    <div class="hero__grid">
+      <div class="hero__left">
+        <h1 class="hero__title">Prevence i řešení <span class="accent">realitních sporů</span> na klíč.</h1>
+
+        <p class="hero__sub">Technicky, právně, lidsky — bez soudu. Nezávislá asistence při koupi, prodeji i sporu o nemovitost. Vede Michal Flachs, certifikovaný mediátor a inspektor nemovitostí.</p>
+
+        <div class="hero__cta-group">
+          <a href="#kontakt" class="btn btn--primary">Chci konzultaci zdarma</a>
+          <a href="#proces" class="btn btn--ghost">Jak to funguje</a>
+        </div>
+
+        <div class="hero__meta">
+          <div class="hero__recenze">
+            <div class="hero__recenze-photos">
+              <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb73e617ea4203566b04_Recenzenti02.avif" alt="">
+              <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb74e4a610bb859279c4_Recenzenti04.avif" alt="">
+              <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb73da50d9e38b80b1d2_Recenzenti06.avif" alt="">
+            </div>
+            <div class="hero__recenze-meta">
+              <div class="hero__stars">
+                <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+                <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+                <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+                <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+                <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+              </div>
+              <div class="hero__recenze-text"><strong>50+</strong> spokojených klientů · hodnocení 5 / 5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__right">
+        <button class="hero__video" type="button"
+                onclick="alert('Sem napojíš lightbox / YouTube / Vimeo embed.');"
+                aria-label="Přehrát úvodní video">
+          <img class="hero__video-poster"
+               src="images/Michal_flachs_profil.jpeg" alt="Michal Flachs">
+          <span class="hero__video-play" aria-hidden="true">
+            <svg viewBox="0 0 18 20" fill="currentColor"><path d="M16.4 8.7C17.7 9.5 17.7 11.4 16.4 12.2L3.4 19.7C2.1 20.4 0.4 19.5 0.4 17.9V2.9C0.4 1.4 2.1 0.4 3.4 1.2L16.4 8.7Z"/></svg>
+          </span>
+          <span class="hero__video-caption">
+            <span class="hero__video-caption-left">Přehrát úvodní video</span>
+            <span class="hero__video-caption-right">2:14 min</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA STRIP — "Můžete nás znát z médií" -->
+<section class="media-strip" aria-label="Můžete nás znát z médií">
+  <div class="container">
+    <span class="media-strip__label">Můžete nás znát z médií</span>
+    <div class="media-strip__row">
+      <img class="media-strip__logo" src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/697631344ae1e06adde67620_C%CC%8Ceska_televize_flat_logo.svg.png" alt="Česká televize" loading="lazy">
+      <img class="media-strip__logo" src="images/media/tv_nova.png" alt="TV Nova" loading="lazy">
+      <img class="media-strip__logo" src="images/media/cerne_ovce.png" alt="Černé ovce" loading="lazy">
+      <img class="media-strip__logo" src="images/media/seznam_zpravy.png" alt="Seznam Zprávy" loading="lazy">
+      <img class="media-strip__logo" src="images/media/idnes.png" alt="iDNES.cz" loading="lazy">
+      <img class="media-strip__logo" src="images/media/realitak_roku.png" alt="Realiťák roku" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="sluzby">
+  <div class="container">
+    <div class="services__head">
+      <div>
+        <span class="eyebrow eyebrow--green">Služby</span>
+        <h2 class="services__title" style="margin-top:20px;">Co pro vás <span class="accent">uděláme</span>.</h2>
+      </div>
+      <p class="lead">Čtyři typy zakázek, ve kterých jsme se vyhranili. Pracujeme nezávisle — za vás, ne za provizi z prodeje.</p>
+    </div>
+
+    <div class="services__grid">
+      <a href="sluzby/bezpecny-nakup/index.html" class="service">
+        <img class="service__icon" src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/68833f195871c66e1e3f2815_001-house.svg" alt="">
+        <h3 class="service__title">Kupujete <span class="accent">nemovitost?</span></h3>
+        <p class="service__desc">Technická prohlídka, právní due diligence, vyjednání ceny a podmínek. Vystupujeme výhradně na straně kupujícího.</p>
+      </a>
+      <a href="sluzby/bezpecny-prodej/index.html" class="service">
+        <img class="service__icon" src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/68833f5dd1dc385f795baf00_002-handshake.svg" alt="">
+        <h3 class="service__title">Prodáváte <span class="accent">nemovitost?</span></h3>
+        <p class="service__desc">Příprava nemovitosti, expertní cenovka, ošetření vad ještě před inzercí. Aby vás po podpisu nestihla reklamace.</p>
+      </a>
+      <a href="sluzby/realitni-mediator/index.html" class="service">
+        <img class="service__icon" src="images/services/scales.svg" alt="">
+        <h3 class="service__title">Mimosoudní <span class="accent">řešení sporů.</span></h3>
+        <p class="service__desc">Mediace mezi kupujícím a prodávajícím, sousedy, dědici nebo nájemníky. Rychleji a levněji než soud.</p>
+      </a>
+      <a href="sluzby/skryte-vady/index.html" class="service">
+        <img class="service__icon" src="https://cdn.prod.website-files.com/674b43d064a268c25ea4d9f7/68833f68a154bbf641880f69_003-give.svg" alt="">
+        <h3 class="service__title">Skryté <span class="accent">vady a reklamace.</span></h3>
+        <p class="service__desc">Posouzení reklamace, expertní stanovisko, vyjednání nápravy nebo finančního vyrovnání. Pro kupující i prodávající.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="stats__head">
+      <span class="eyebrow">Mediato v číslech</span>
+      <h2 class="stats__title">Dvacet let praxe. <span class="accent">Žádná teorie.</span></h2>
+    </div>
+    <div class="stats__grid">
+      <div class="stat">
+        <div class="stat__num"><span class="stat__num-value" data-count="20" data-suffix="+">0+</span><small>let praxe</small></div>
+        <div class="stat__label">Praxe v realitách</div>
+        <div class="stat__desc">Hypotéky, investice, prodej, vady staveb i mediace sporů.</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num"><span class="stat__num-value" data-count="50" data-suffix="+">0+</span><small>klientů</small></div>
+        <div class="stat__label">Spokojených klientů</div>
+        <div class="stat__desc">Kupujících, prodávajících i účastníků sporů.</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num"><span class="stat__num-value" data-count="0">0</span><small>× soud</small></div>
+        <div class="stat__label">Mimosoudní řešení</div>
+        <div class="stat__desc">Cílem je dohoda. Soud je pojistka, ne výchozí scénář.</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num"><span class="stat__num-value" data-count="4">0</span><small>oblasti</small></div>
+        <div class="stat__label">Komplexní pokrytí</div>
+        <div class="stat__desc">Nákup, prodej, skryté vady a realitní mediace.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="o-mne">
+  <div class="container">
+    <div class="about__inner">
+      <div>
+        <span class="eyebrow eyebrow--green">Lépe. Lidsky. Smírně.</span>
+        <h2 class="about__title">Jsem Michal Flachs, <span class="accent">zakladatel Mediato.</span></h2>
+        <div class="about__body">
+          <p>Po dvaceti letech, kdy jsem si v realitách prošel snad úplně vším — hypotékami, investicemi do nemovitostí, prodejem, vadami staveb i spory mezi lidmi — jsem si řekl, že to chci dělat <strong>jinak</strong>.</p>
+          <p>Mediato stojí na třech principech: <strong>nezávislost</strong> (nepracujeme za provizi z prodeje), <strong>komplexnost</strong> (technika, právo a vyjednávání pod jednou střechou) a <strong>klid</strong> (cíl je dohoda, ne vítězství).</p>
+        </div>
+        <div class="about__cta">
+          <a href="#kontakt" class="btn btn--primary">Konzultace zdarma</a>
+          <a href="https://www.linkedin.com/in/michal-flachs-58b542356/" target="_blank" rel="noopener" class="btn btn--ghost">Profil na LinkedIn</a>
+        </div>
+      </div>
+      <div class="about__visual">
+        <img class="about__photo" src="images/Michal_flachs_profil.jpeg" alt="Michal Flachs">
+        <div class="about__widget">
+          <div class="about__widget-num"><span class="stat__num-value" data-count="20" data-suffix="+">0+</span></div>
+          <div class="about__widget-label">
+            <strong>let praxe</strong>
+            v realitách a inspekci staveb
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTS GROUP — "Vše pod jednou střechou" -->
+<section class="experts">
+  <div class="container">
+    <div class="experts__inner">
+      <div class="experts__visual">
+        <img src="images/mediato_fengshui.svg" alt="Schéma služeb Mediato — technická diagnostika, ocenění vad, bezpečný prodej, realitní mediace, expertní síť">
+      </div>
+      <div>
+        <span class="eyebrow">Vše pod jednou střechou</span>
+        <h2 class="experts__title">Jsme skupina expertů v&nbsp;realitách s&nbsp;<span class="accent">20 lety zkušeností.</span></h2>
+        <p class="experts__lead">Technická diagnostika, ocenění vad, bezpečný prodej, realitní mediace a&nbsp;expertní síť právníků — vše pod jednou střechou, bez prostředníků a&nbsp;skrytých provizí.</p>
+        <ul class="experts__list">
+          <li class="experts__item">
+            <span class="experts__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5L5 9.5L10 3.5"/></svg></span>
+            Vlastní technické inspektory
+          </li>
+          <li class="experts__item">
+            <span class="experts__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5L5 9.5L10 3.5"/></svg></span>
+            Vlastní odhadce nemovitého majetku
+          </li>
+          <li class="experts__item">
+            <span class="experts__check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5L5 9.5L10 3.5"/></svg></span>
+            Zkušené mediátory a&nbsp;právní síť
+          </li>
+        </ul>
+        <div class="experts__cta">
+          <a href="#kontakt" class="btn btn--primary">Konzultace zdarma</a>
+          <a href="o-nas/index.html" class="btn btn--dark">Více o&nbsp;nás</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDS -->
+<section class="creds-section">
+  <div class="container">
+    <div class="creds-section__head">
+      <div>
+        <span class="eyebrow">Vzdělání a praxe</span>
+        <h2 class="creds-section__title" style="margin-top:20px;">Vybraná <span class="accent">průprava.</span></h2>
+      </div>
+      <p class="lead">Právo, mediace, technické inspekce a znalecká činnost. Vše doložené, vše použitelné v praxi.</p>
+    </div>
+
+    <div class="cred-list">
+      <div class="cred">
+        <div class="cred__logo"><img src="images/creds/peu.jpeg" alt="Panevropská univerzita"></div>
+        <div>
+          <div class="cred__name">Panevropská univerzita</div>
+          <div class="cred__role">Master of Business Administration (MBA), Reality</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Vady a poruchy staveb v realitní praxi.</div>
+        <div class="cred__type">MBA</div>
+      </div>
+      <div class="cred">
+        <div class="cred__logo"><img src="images/creds/newton.jpeg" alt="NEWTON University"></div>
+        <div>
+          <div class="cred__name">NEWTON University</div>
+          <div class="cred__role">Master of Laws (LL.M.), Právo v realitní praxi</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Skryté vady nemovitostí a mimosoudní řešení sporů.</div>
+        <div class="cred__type">LL.M.</div>
+      </div>
+      <div class="cred">
+        <div class="cred__logo"><img src="images/creds/jvs.jpeg" alt="Jagiellońská vysoká škola"></div>
+        <div>
+          <div class="cred__name">Jagiellońská vysoká škola</div>
+          <div class="cred__role">Doctor of Business Administration (DBA)</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Od skryté vady k dohodě — realitní mediace v praxi.</div>
+        <div class="cred__type">DBA</div>
+      </div>
+      <div class="cred">
+        <div class="cred__logo"><img src="images/creds/ain.jpg" alt="Asociace inspektorů nemovitostí"></div>
+        <div>
+          <div class="cred__name">Asociace inspektorů nemovitostí</div>
+          <div class="cred__role">Tiskový mluvčí asociace a certifikovaný inspektor</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Specializace na skryté vady.</div>
+        <div class="cred__type">Certifikace</div>
+      </div>
+      <div class="cred">
+        <div class="cred__logo"><img src="images/creds/dek.jpeg" alt="DEK projekt"></div>
+        <div>
+          <div class="cred__name">DEK projekt</div>
+          <div class="cred__role">Oblastní zástupce znalecké kanceláře DEKPROJEKT</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Problematika SVJ, vady a poruchy staveb.</div>
+        <div class="cred__type">Praxe</div>
+      </div>
+      <div class="cred">
+        <div class="cred__logo"><img src="images/creds/amcr.jpg" alt="Asociace mediátorů ČR"></div>
+        <div>
+          <div class="cred__name">Asociace mediátorů ČR</div>
+          <div class="cred__role">Certifikovaný mediátor</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Realitní mediace.</div>
+        <div class="cred__type">Certifikace</div>
+      </div>
+      <div class="cred">
+        <div class="cred__logo"><img src="images/creds/ckom.png" alt="Česká komora odhadců majetku"></div>
+        <div>
+          <div class="cred__name">Česká komora odhadců majetku</div>
+          <div class="cred__role">Profesní sdružení znalců a odhadců, z.s.</div>
+        </div>
+        <div class="cred__focus"><strong>Zaměření:</strong> Člen a odhadce nemovitého majetku.</div>
+        <div class="cred__type">Členství</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section class="refs" id="reference">
+  <div class="container">
+    <div class="refs__head">
+      <span class="eyebrow eyebrow--green">Reference</span>
+      <h2 class="refs__title">Co říkají <span class="accent">naši klienti.</span></h2>
+    </div>
+
+    <div class="refs__main">
+      <p class="refs__main-quote">Mediační služby pana Flachse jsme využili při řešení skryté vady nemovitosti. Díky mediaci se nám podařilo spor vyřešit mimosoudně, čistě vzájemnou domluvou, a dosáhnout uspokojivé finanční kompenzace. Vnímám to jako výrazně lepší a klidnější alternativu než hned vstupovat do soudního sporu."</p>
+      <div class="refs__main-author">
+        <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb73e617ea4203566b04_Recenzenti02.avif" alt="">
+        <div>
+          <div class="refs__main-author-name">RNDr. Jana Martin (Říhová) Ph.D.</div>
+          <div class="refs__main-author-pos">Jižní Čechy · skryté vady</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="refs__grid">
+      <div class="ref-card">
+        <div class="ref-card__stars">
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+        </div>
+        <p class="ref-card__text">Při koupi rodinného domu byla asistence Mediato nejlepší investice celého nákupu. Michal prošel prohlídku, upozornil na technická rizika a vyjednal slevu, která několikanásobně pokryla jeho odměnu.</p>
+        <div class="ref-card__author">
+          <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb74e4a610bb859279c4_Recenzenti04.avif" alt="">
+          <div>
+            <div class="ref-card__author-name">Petr K.</div>
+            <div class="ref-card__author-pos">Praha · kupující</div>
+          </div>
+        </div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-card__stars">
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+        </div>
+        <p class="ref-card__text">Po koupi bytu jsme objevili skrytou vadu, kterou nám prodávající zamlčel. Místo soudu jsme zkusili mediaci a celou věc dotáhli do dohody během několika týdnů. Ušetřili jsme nervy, peníze i roky nejistoty.</p>
+        <div class="ref-card__author">
+          <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb73da50d9e38b80b1d2_Recenzenti06.avif" alt="">
+          <div>
+            <div class="ref-card__author-name">Lucie a Tomáš N.</div>
+            <div class="ref-card__author-pos">Brno · klient mediace</div>
+          </div>
+        </div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-card__stars">
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 0L9.8 5.7H16L11 9.2L12.8 14.9L8 11.4L3.2 14.9L5 9.2L0 5.7H6.2L8 0Z"/></svg>
+        </div>
+        <p class="ref-card__text">Prodávali jsme po rodičích starší dům a chtěli mít jistotu, že nás po podpisu nepřekvapí reklamace. Michal nemovitost prošel, doporučil, co před prodejem zveřejnit a jak nastavit smlouvu. Prodali jsme bez stresu.</p>
+        <div class="ref-card__author">
+          <img src="https://cdn.prod.website-files.com/679ccbd9a71420cb1d6285f1/6911eb73e617ea4203566b04_Recenzenti02.avif" alt="">
+          <div>
+            <div class="ref-card__author-name">Marie H.</div>
+            <div class="ref-card__author-pos">Středočeský kraj · prodávající</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="proces">
+  <div class="container">
+    <div class="process__head">
+      <div>
+        <span class="eyebrow eyebrow--light">Jak to funguje</span>
+        <h2 class="process__title" style="margin-top:20px;">Čtyři kroky k&nbsp;<span class="accent">dohodě.</span></h2>
+      </div>
+      <p class="process__intro">Ať řešíte koupi, prodej, vadu nebo spor — proces je vždy stejný. Předvídatelný, rychlý a směřující k jasnému závěru.</p>
+    </div>
+
+    <div class="process__steps">
+      <div class="step"><div class="step__num">01</div><div class="step__title">Konzultace zdarma</div><div class="step__desc">Krátký hovor nebo schůzka. Posoudíme situaci a navrhneme postup. Bez závazku, bez faktury.</div></div>
+      <div class="step"><div class="step__num">02</div><div class="step__title">Analýza a plán</div><div class="step__desc">Prohlídka, dokumenty, expertní posouzení. Dostanete písemné stanovisko a jasný odhad nákladů.</div></div>
+      <div class="step"><div class="step__num">03</div><div class="step__title">Jednání</div><div class="step__desc">Vyjednáváme s druhou stranou — kupujícím, prodávajícím, makléřem, sousedem. Vždy z pozice nezávislosti.</div></div>
+      <div class="step"><div class="step__num">04</div><div class="step__title">Dohoda</div><div class="step__desc">Písemná dohoda, smlouva nebo mediační zápis. Pokud nelze, předáme spis právníkovi s plnou dokumentací.</div></div>
+    </div>
+
+    <div class="process__cta">
+      <a href="#kontakt" class="btn btn--primary">Objednat konzultaci</a>
+      <a href="#sluzby" class="btn btn--ghost-light">Prohlédnout služby</a>
+      <span class="process__cta-note">Konzultace je vždy zdarma a nezavazuje k pokračování.</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="faq__head">
+      <div>
+        <span class="eyebrow">FAQ</span>
+        <h2 class="faq__title" style="margin-top:20px;">Časté <span class="accent">otázky.</span></h2>
+      </div>
+      <div class="faq__list">
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>Co jsou skryté vady nemovitosti?</span><span class="faq-q__icon" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a__inner">Skryté vady jsou takové problémy na nemovitosti, které nebyly při koupi zjevné a kupující o nich nebyl informován. Často se projeví až po nastěhování — například vlhkost, statické poruchy, problémy s rozvody nebo konstrukcí.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>Jak rychle musím skryté vady řešit?</span><span class="faq-q__icon" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a__inner">Vadu je třeba uplatnit „bez zbytečného odkladu" po jejím zjištění. Občanský zákoník dává obecnou lhůtu 5 let od nabytí. Čím dříve nás kontaktujete, tím lépe zajistíme důkazy a vyjednávací pozici.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>Musím hned řešit právníky nebo soud?</span><span class="faq-q__icon" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a__inner">Ne. Naším cílem je mimosoudní dohoda — rychlejší, levnější a méně stresující. Pokud dohoda není možná, předáme vše prověřenému advokátovi s plnou dokumentací.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>Pracujete na straně kupujícího nebo prodávajícího?</span><span class="faq-q__icon" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a__inner">U bezpečného nákupu a prodeje pracujeme výhradně na straně klienta. V roli mediátora vystupujeme vždy nezávisle — pomáháme oběma stranám dospět k řešení.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>Provádíte i znalecké posudky?</span><span class="faq-q__icon" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a__inner">Vystavujeme expertní stanoviska pro účely vyjednávání a reklamace. Pro soudní řízení doporučujeme spolupracujícího soudního znalce, jehož posudek je zde rozhodující.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>Co všechno zahrnuje úvodní konzultace?</span><span class="faq-q__icon" aria-hidden="true"></span></button>
+          <div class="faq-a"><div class="faq-a__inner">30–60 minut hovoru nebo osobní schůzky. Posouzení situace, doporučený postup, odhad nákladů a časové osy. Bez závazku k pokračování, zdarma.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-block">
+  <div class="container">
+    <div class="cta-block__inner">
+      <div>
+        <span class="eyebrow eyebrow--green">Začněme</span>
+        <h2 class="cta-block__title" style="margin-top:20px;">Objednejte si <span class="accent">konzultaci zdarma.</span></h2>
+        <p class="cta-block__sub">30–60 minut hovoru nebo schůzky. Posoudíme situaci, navrhneme postup, dostanete jasný odhad nákladů. Bez závazku.</p>
+      </div>
+      <div class="cta-block__buttons">
+        <a href="#kontakt" class="btn btn--dark">Vyplnit formulář</a>
+        <a href="tel:+420606101121" class="btn btn--ghost">Zavolat: +420 606 101 121</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="kontakt">
+  <div class="container">
+    <div class="contact__inner">
+      <div>
+        <span class="eyebrow eyebrow--light">Kontakt</span>
+        <h2 class="contact__title">Pojďme se <span class="accent">poznat.</span></h2>
+        <p class="contact__lead">První konzultace je zdarma a k ničemu nezavazuje. Ozvěte se telefonicky, e‑mailem, nebo nechte zprávu vpravo — odpovíme do 24 hodin.</p>
+
+        <ul class="contact__channels">
+          <li class="contact__channel">
+            <span class="contact__channel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            </span>
+            <span class="contact__channel-label">Telefon</span>
+            <a href="tel:+420606101121" class="contact__channel-value">+420 606 101 121</a>
+          </li>
+          <li class="contact__channel">
+            <span class="contact__channel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+            </span>
+            <span class="contact__channel-label">E-mail</span>
+            <a href="mailto:info@mediato.cz" class="contact__channel-value">info@mediato.cz</a>
+          </li>
+          <li class="contact__channel">
+            <span class="contact__channel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <span class="contact__channel-label">Sídlo</span>
+            <span class="contact__channel-value" style="font-size:17px; line-height:1.4;">Tiskařská 257/10,<br>108 00 Praha 10 — Malešice</span>
+          </li>
+        </ul>
+      </div>
+
+      <form class="form" onsubmit="event.preventDefault(); alert('Děkujeme, ozveme se do 24 hodin.');">
+        <div class="form__title">Objednejte si konzultaci</div>
+        <div class="form__sub">Vyplňte krátký formulář — ozveme se do 24 hodin.</div>
+        <div class="form__row">
+          <div class="field"><label for="f-name">Jméno</label><input id="f-name" type="text" placeholder="Vaše jméno" required></div>
+          <div class="field"><label for="f-phone">Telefon</label><input id="f-phone" type="tel" placeholder="+420 …" required></div>
+        </div>
+        <div class="form__row">
+          <div class="field field--full"><label for="f-email">E-mail</label><input id="f-email" type="email" placeholder="vy@email.cz" required></div>
+        </div>
+        <div class="form__row">
+          <div class="field field--full">
+            <label for="f-topic">Téma konzultace</label>
+            <select id="f-topic" required>
+              <option value="">Vyberte téma…</option>
+              <option value="nakup">Bezpečný nákup nemovitosti</option>
+              <option value="prodej">Bezpečný prodej nemovitosti</option>
+              <option value="mediace">Realitní mediace / spor</option>
+              <option value="vady">Skryté vady a reklamace</option>
+              <option value="jine">Něco jiného</option>
+            </select>
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="field field--full"><label for="f-msg">Krátký popis situace</label><textarea id="f-msg" placeholder="Co se děje? Jaký je váš cíl?"></textarea></div>
+        </div>
+        <button type="submit" class="form__submit">Odeslat a objednat konzultaci →</button>
+        <p class="form__note">Vaše údaje použijeme jen pro vyřízení této zprávy. Žádný marketing.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <img class="footer__logo" src="images/Mediato_logo_light.svg" alt="Mediato">
+      <div class="footer__tagline">Lépe. Lidsky. Smírně.</div>
+    </div>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <div class="footer__col-title">Provozovatel</div>
+        <p>Mediato CZ s.r.o.<br>Tiskařská 257/10<br>108 00 Praha 10 — Malešice</p>
+        <p style="margin-top:14px;">IČO: 04917251 · DIČ: CZ04917251<br>OR: C 255588, Městský soud v Praze</p>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Služby</div>
+        <ul>
+          <li><a href="sluzby/bezpecny-nakup/index.html">Bezpečný nákup</a></li>
+          <li><a href="sluzby/bezpecny-prodej/index.html">Bezpečný prodej</a></li>
+          <li><a href="sluzby/realitni-mediator/index.html">Realitní mediátor</a></li>
+          <li><a href="sluzby/skryte-vady/index.html">Skryté vady</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Mediato</div>
+        <ul>
+          <li><a href="o-nas/index.html">O nás</a></li>
+          <li><a href="#proces">Jak to funguje</a></li>
+          <li><a href="#reference">Reference</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__col-title">Kontakt</div>
+        <ul>
+          <li><a href="tel:+420606101121">+420 606 101 121</a></li>
+          <li><a href="mailto:info@mediato.cz">info@mediato.cz</a></li>
+          <li><a href="https://www.linkedin.com/in/michal-flachs-58b542356/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Mediato CZ s.r.o. · Všechna práva vyhrazena.</span>
+      <span><a href="zasady-ochrany-osobnich-udaju.html">Zásady ochrany osobních údajů</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Czech typography: prevent orphan single-letter prepositions/conjunctions at line ends.
+(function fixOrphans(){
+  var SHORT = /(^|\s)([ksvzaiou]|do|na|po|ve|ze|se|ku|že|by|či|ne)\s+/gi;
+  function walk(node){
+    if (node.nodeType === 3) {
+      if (/[a-zěščřžýáíéúůďťňó]/i.test(node.nodeValue) && node.nodeValue.indexOf('\u00a0') === -1) {
+        node.nodeValue = node.nodeValue.replace(SHORT, function(m, pre, word){ return pre + word + '\u00a0'; });
+      }
+    } else if (node.nodeType === 1) {
+      var tag = node.tagName;
+      if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'CODE' || tag === 'PRE') return;
+      for (var i = 0; i < node.childNodes.length; i++) walk(node.childNodes[i]);
+    }
+  }
+  walk(document.body);
+})();
+
+// Count-up animation for stat__num-value elements
+(function countUp(){
+  var els = document.querySelectorAll('.stat__num-value');
+  if (!els.length || !('IntersectionObserver' in window)) return;
+  function animate(el){
+    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    var start = null, duration = 1400;
+    function step(t){
+      if (!start) start = t;
+      var p = Math.min((t - start) / duration, 1);
+      // easeOutCubic
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting && !e.target.dataset.counted) {
+        e.target.dataset.counted = '1';
+        animate(e.target);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.35 });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+<script>
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('is-open');
+    document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('is-open'); });
+    if (!isOpen) item.classList.add('is-open');
+  });
+});
+var firstFaq = document.querySelector('.faq-item');
+if (firstFaq) firstFaq.classList.add('is-open');
+
+var nav = document.getElementById('nav');
+window.addEventListener('scroll', function(){
+  if (window.scrollY > 40) nav.classList.add('is-scrolled');
+  else nav.classList.remove('is-scrolled');
+});
+
+// Mobile dropdown toggle (touch devices)
+document.querySelectorAll('.nav__link--has-dd').forEach(function(btn){
+  btn.addEventListener('click', function(e){
+    var item = btn.closest('.nav__item--dropdown');
+    if (window.matchMedia('(hover: none)').matches) {
+      e.preventDefault();
+      item.classList.toggle('is-open');
+    }
+  });
+});
+</script>
+
+<script>
+// Mobile burger toggle
+(function(){
+  var burger = document.querySelector('.nav__burger');
+  var nav = document.getElementById('nav');
+  if (!burger || !nav) return;
+  burger.addEventListener('click', function(){
+    nav.classList.toggle('is-mobile-open');
+    burger.setAttribute('aria-expanded', nav.classList.contains('is-mobile-open') ? 'true' : 'false');
+  });
+  // Close drawer when clicking any nav link inside
+  document.querySelectorAll('.nav__menu .nav__link:not(.nav__link--has-dd), .nav__menu .dd-card, .nav__cta').forEach(function(el){
+    el.addEventListener('click', function(){ nav.classList.remove('is-mobile-open'); });
+  });
+})();
+</script>
+</body>
+</html>
