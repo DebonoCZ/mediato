@@ -1,0 +1,2 @@
+# mediato
+Mediato.cz
